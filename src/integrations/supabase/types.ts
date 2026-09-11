@@ -814,21 +814,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      can_edit: {
-        Args: { _user: string; _workspace: string }
-        Returns: boolean
-      }
-      is_admin: {
-        Args: { _user: string; _workspace: string }
-        Returns: boolean
-      }
-      is_member: {
-        Args: { _user: string; _workspace: string }
-        Returns: boolean
-      }
-      member_role: {
-        Args: { _user: string; _workspace: string }
-        Returns: Database["public"]["Enums"]["workspace_role"]
+      create_workspace: {
+        Args: { _currency?: string; _name: string; _timezone?: string }
+        Returns: {
+          created_at: string
+          created_by: string
+          currency: string
+          id: string
+          name: string
+          round_robin_index: number
+          timezone: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "workspaces"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
     }
     Enums: {
