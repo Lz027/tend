@@ -818,6 +818,25 @@ export type Database = {
         Args: { _user: string; _workspace: string }
         Returns: boolean
       }
+      create_workspace: {
+        Args: { _currency?: string; _name: string; _timezone?: string }
+        Returns: {
+          created_at: string
+          created_by: string
+          currency: string
+          id: string
+          name: string
+          round_robin_index: number
+          timezone: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "workspaces"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       is_admin: {
         Args: { _user: string; _workspace: string }
         Returns: boolean
