@@ -1,8 +1,8 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  Bell, ClipboardList, FileText, Gauge, LogOut, Menu, Route as RouteIcon,
-  Sparkles, Users, X,
+  Bell, ClipboardList, FileText, Flower2, Gauge, LogOut, Menu, Plug,
+  Route as RouteIcon, Users,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,6 +15,7 @@ const nav = [
   { to: "/forms", label: "Forms", icon: FileText },
   { to: "/tasks", label: "Tasks", icon: ClipboardList },
   { to: "/rules", label: "Rules", icon: RouteIcon },
+  { to: "/automations", label: "Automations", icon: Plug },
 ] as const;
 
 function NavItems({ close }: { close?: () => void }) {
@@ -47,7 +48,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
   const queryClient = useQueryClient();
   const { data } = useWorkspace();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const initials = (data?.user.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "BL";
+  const initials = (data?.user.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "PP";
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -57,8 +58,8 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
 
   const sidebar = <div className="flex h-full flex-col bg-sidebar p-4">
     <Link to="/dashboard" className="mb-8 flex items-center gap-2 px-2 font-semibold text-sidebar-foreground">
-      <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span>
-      <span className="font-serif text-xl">Pathlight</span>
+      <span className="flex size-8 items-center justify-center rounded-xl bg-primary text-primary-foreground"><Flower2 className="size-4" /></span>
+      <span className="font-display text-2xl">Poppy</span>
     </Link>
     <div className="mb-5 rounded-md border border-sidebar-border bg-background/60 p-3">
       <p className="text-xs text-muted-foreground">Workspace</p>
@@ -82,7 +83,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
           <SheetTrigger asChild><Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
           <SheetContent side="left" className="w-[280px] p-0"><SheetTitle className="sr-only">Navigation</SheetTitle>{sidebar}</SheetContent>
         </Sheet>
-        <h1 className="font-serif text-2xl font-normal md:text-3xl">{title}</h1>
+        <h1 className="font-display text-2xl font-normal md:text-3xl">{title}</h1>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" size="icon" aria-label="Notifications" title="Notifications"><Bell /></Button>
           {action}

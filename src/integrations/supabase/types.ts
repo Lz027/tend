@@ -106,31 +106,290 @@ export type Database = {
           },
         ]
       }
+      automation_deliveries: {
+        Row: {
+          attempt_count: number
+          created_at: string
+          delivered_at: string | null
+          duration_ms: number | null
+          endpoint_id: string
+          event_id: string | null
+          event_type: string
+          id: string
+          next_retry_at: string | null
+          payload: Json
+          response_body_preview: string | null
+          response_status: number | null
+          status: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          attempt_count?: number
+          created_at?: string
+          delivered_at?: string | null
+          duration_ms?: number | null
+          endpoint_id: string
+          event_id?: string | null
+          event_type: string
+          id?: string
+          next_retry_at?: string | null
+          payload?: Json
+          response_body_preview?: string | null
+          response_status?: number | null
+          status?: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          attempt_count?: number
+          created_at?: string
+          delivered_at?: string | null
+          duration_ms?: number | null
+          endpoint_id?: string
+          event_id?: string | null
+          event_type?: string
+          id?: string
+          next_retry_at?: string | null
+          payload?: Json
+          response_body_preview?: string | null
+          response_status?: number | null
+          status?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_deliveries_endpoint_id_fkey"
+            columns: ["endpoint_id"]
+            isOneToOne: false
+            referencedRelation: "automation_endpoints"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "automation_deliveries_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "automation_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "automation_deliveries_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_endpoints: {
+        Row: {
+          avg_response_ms: number | null
+          consecutive_failures: number
+          created_at: string
+          created_by: string | null
+          delivery_count: number
+          failure_count: number
+          id: string
+          included_fields: string[]
+          is_active: boolean
+          last_failure_at: string | null
+          last_success_at: string | null
+          name: string
+          provider: string
+          secret: string
+          subscribed_events: string[]
+          updated_at: string
+          url: string
+          workspace_id: string
+        }
+        Insert: {
+          avg_response_ms?: number | null
+          consecutive_failures?: number
+          created_at?: string
+          created_by?: string | null
+          delivery_count?: number
+          failure_count?: number
+          id?: string
+          included_fields?: string[]
+          is_active?: boolean
+          last_failure_at?: string | null
+          last_success_at?: string | null
+          name: string
+          provider?: string
+          secret: string
+          subscribed_events?: string[]
+          updated_at?: string
+          url: string
+          workspace_id: string
+        }
+        Update: {
+          avg_response_ms?: number | null
+          consecutive_failures?: number
+          created_at?: string
+          created_by?: string | null
+          delivery_count?: number
+          failure_count?: number
+          id?: string
+          included_fields?: string[]
+          is_active?: boolean
+          last_failure_at?: string | null
+          last_success_at?: string | null
+          name?: string
+          provider?: string
+          secret?: string
+          subscribed_events?: string[]
+          updated_at?: string
+          url?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_endpoints_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_events: {
+        Row: {
+          created_at: string
+          id: string
+          idempotency_key: string | null
+          payload: Json
+          resource_id: string | null
+          resource_type: string
+          type: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          payload?: Json
+          resource_id?: string | null
+          resource_type?: string
+          type: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          idempotency_key?: string | null
+          payload?: Json
+          resource_id?: string | null
+          resource_type?: string
+          type?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_events_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      automation_sources: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          error_count: number
+          field_mapping: Json
+          id: string
+          is_active: boolean
+          last_error: string | null
+          last_received_at: string | null
+          name: string
+          provider: string
+          received_count: number
+          sample_payload: Json | null
+          token: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          error_count?: number
+          field_mapping?: Json
+          id?: string
+          is_active?: boolean
+          last_error?: string | null
+          last_received_at?: string | null
+          name: string
+          provider?: string
+          received_count?: number
+          sample_payload?: Json | null
+          token: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          error_count?: number
+          field_mapping?: Json
+          id?: string
+          is_active?: boolean
+          last_error?: string | null
+          last_received_at?: string | null
+          name?: string
+          provider?: string
+          received_count?: number
+          sample_payload?: Json | null
+          token?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_sources_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       consent_records: {
         Row: {
+          channel: string
           consent_text: string | null
+          consent_version: string
           created_at: string
           granted: boolean
           id: string
           lead_id: string | null
+          purpose: string
           source: string | null
           workspace_id: string
         }
         Insert: {
+          channel?: string
           consent_text?: string | null
+          consent_version?: string
           created_at?: string
           granted?: boolean
           id?: string
           lead_id?: string | null
+          purpose?: string
           source?: string | null
           workspace_id: string
         }
         Update: {
+          channel?: string
           consent_text?: string | null
+          consent_version?: string
           created_at?: string
           granted?: boolean
           id?: string
           lead_id?: string | null
+          purpose?: string
           source?: string | null
           workspace_id?: string
         }
@@ -326,6 +585,10 @@ export type Database = {
           do_not_contact: boolean
           duplicate_of: string | null
           email: string | null
+          email_normalized: string | null
+          engagement_state: string
+          first_contacted_at: string | null
+          first_touch_source: string | null
           form_id: string | null
           full_name: string | null
           id: string
@@ -334,10 +597,12 @@ export type Database = {
           job_title: string | null
           landing_page: string | null
           last_activity_at: string
+          last_touch_source: string | null
           lost_reason: string | null
           message: string | null
           owner_id: string | null
           phone: string | null
+          phone_normalized: string | null
           preferred_contact: string | null
           reference: string
           referrer: string | null
@@ -349,6 +614,7 @@ export type Database = {
           source: string
           status: Database["public"]["Enums"]["lead_status"]
           submission_count: number
+          tags: string[]
           updated_at: string
           utm_campaign: string | null
           utm_content: string | null
@@ -368,6 +634,10 @@ export type Database = {
           do_not_contact?: boolean
           duplicate_of?: string | null
           email?: string | null
+          email_normalized?: string | null
+          engagement_state?: string
+          first_contacted_at?: string | null
+          first_touch_source?: string | null
           form_id?: string | null
           full_name?: string | null
           id?: string
@@ -376,10 +646,12 @@ export type Database = {
           job_title?: string | null
           landing_page?: string | null
           last_activity_at?: string
+          last_touch_source?: string | null
           lost_reason?: string | null
           message?: string | null
           owner_id?: string | null
           phone?: string | null
+          phone_normalized?: string | null
           preferred_contact?: string | null
           reference?: string
           referrer?: string | null
@@ -391,6 +663,7 @@ export type Database = {
           source?: string
           status?: Database["public"]["Enums"]["lead_status"]
           submission_count?: number
+          tags?: string[]
           updated_at?: string
           utm_campaign?: string | null
           utm_content?: string | null
@@ -410,6 +683,10 @@ export type Database = {
           do_not_contact?: boolean
           duplicate_of?: string | null
           email?: string | null
+          email_normalized?: string | null
+          engagement_state?: string
+          first_contacted_at?: string | null
+          first_touch_source?: string | null
           form_id?: string | null
           full_name?: string | null
           id?: string
@@ -418,10 +695,12 @@ export type Database = {
           job_title?: string | null
           landing_page?: string | null
           last_activity_at?: string
+          last_touch_source?: string | null
           lost_reason?: string | null
           message?: string | null
           owner_id?: string | null
           phone?: string | null
+          phone_normalized?: string | null
           preferred_contact?: string | null
           reference?: string
           referrer?: string | null
@@ -433,6 +712,7 @@ export type Database = {
           source?: string
           status?: Database["public"]["Enums"]["lead_status"]
           submission_count?: number
+          tags?: string[]
           updated_at?: string
           utm_campaign?: string | null
           utm_content?: string | null
@@ -660,6 +940,47 @@ export type Database = {
           },
         ]
       }
+      saved_views: {
+        Row: {
+          created_at: string
+          created_by: string
+          filters: Json
+          id: string
+          is_shared: boolean
+          name: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          filters?: Json
+          id?: string
+          is_shared?: boolean
+          name: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          filters?: Json
+          id?: string
+          is_shared?: boolean
+          name?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_views_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       scoring_rules: {
         Row: {
           created_at: string
@@ -712,6 +1033,7 @@ export type Database = {
       }
       tasks: {
         Row: {
+          admin_notified_at: string | null
           assignee_id: string | null
           completed_at: string | null
           created_at: string
@@ -720,7 +1042,9 @@ export type Database = {
           due_at: string | null
           id: string
           lead_id: string | null
+          owner_notified_at: string | null
           priority: Database["public"]["Enums"]["task_priority"]
+          sla_minutes: number | null
           status: Database["public"]["Enums"]["task_status"]
           title: string
           type: Database["public"]["Enums"]["task_type"]
@@ -728,6 +1052,7 @@ export type Database = {
           workspace_id: string
         }
         Insert: {
+          admin_notified_at?: string | null
           assignee_id?: string | null
           completed_at?: string | null
           created_at?: string
@@ -736,7 +1061,9 @@ export type Database = {
           due_at?: string | null
           id?: string
           lead_id?: string | null
+          owner_notified_at?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          sla_minutes?: number | null
           status?: Database["public"]["Enums"]["task_status"]
           title: string
           type?: Database["public"]["Enums"]["task_type"]
@@ -744,6 +1071,7 @@ export type Database = {
           workspace_id: string
         }
         Update: {
+          admin_notified_at?: string | null
           assignee_id?: string | null
           completed_at?: string | null
           created_at?: string
@@ -752,7 +1080,9 @@ export type Database = {
           due_at?: string | null
           id?: string
           lead_id?: string | null
+          owner_notified_at?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          sla_minutes?: number | null
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
           type?: Database["public"]["Enums"]["task_type"]
@@ -844,7 +1174,7 @@ export type Database = {
         | "won"
         | "lost"
         | "disqualified"
-      score_band: "hot" | "warm" | "cold" | "disqualified"
+      score_band: "hot" | "warm" | "qualified" | "cold" | "disqualified"
       task_priority: "low" | "normal" | "high" | "urgent"
       task_status: "open" | "in_progress" | "done" | "cancelled"
       task_type:
@@ -993,7 +1323,7 @@ export const Constants = {
         "lost",
         "disqualified",
       ],
-      score_band: ["hot", "warm", "cold", "disqualified"],
+      score_band: ["hot", "warm", "qualified", "cold", "disqualified"],
       task_priority: ["low", "normal", "high", "urgent"],
       task_status: ["open", "in_progress", "done", "cancelled"],
       task_type: [

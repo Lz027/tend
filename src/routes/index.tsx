@@ -5,9 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pathlight" },
+      { title: "Poppy" },
       { name: "description", content: "A lead workspace that turns enquiries into customers." },
-      { property: "og:title", content: "Pathlight" },
+      { property: "og:title", content: "Poppy" },
       { property: "og:description", content: "A lead workspace that turns enquiries into customers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

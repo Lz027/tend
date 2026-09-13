@@ -12,9 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated/forms/new")({
   head: () => ({
     meta: [
-      { title: "New form | Pathlight" },
+      { title: "New form | Poppy" },
       { name: "description", content: "Create a new lead capture form." },
-      { property: "og:title", content: "New form | Pathlight" },
+      { property: "og:title", content: "New form | Poppy" },
       { property: "og:description", content: "Create a new lead capture form." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -162,7 +162,7 @@ function NewFormPage() {
       <div className="mx-auto max-w-3xl">
         <div className="space-y-6">
           <div className="rounded-lg border bg-card p-5">
-            <h2 className="font-serif text-xl">Form details</h2>
+            <h2 className="font-display text-xl">Form details</h2>
             <div className="mt-4 grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="name">Form name</Label>
@@ -202,7 +202,7 @@ function NewFormPage() {
 
           <div className="rounded-lg border bg-card p-5">
             <div className="flex items-center justify-between">
-              <h2 className="font-serif text-xl">Fields</h2>
+              <h2 className="font-display text-xl">Fields</h2>
               <div className="flex gap-2">
                 <select
                   className="h-9 rounded-md border bg-background px-2 text-sm"
@@ -318,7 +318,7 @@ function NewFormPage() {
           </div>
 
           <div className="rounded-lg border bg-card p-5">
-            <h2 className="font-serif text-xl">Submission</h2>
+            <h2 className="font-display text-xl">Submission</h2>
             <div className="mt-4 grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="submitText">Submit button text</Label>
