@@ -1174,7 +1174,7 @@ export type Database = {
         | "won"
         | "lost"
         | "disqualified"
-      score_band: "hot" | "warm" | "cold" | "disqualified"
+      score_band: "hot" | "warm" | "qualified" | "cold" | "disqualified"
       task_priority: "low" | "normal" | "high" | "urgent"
       task_status: "open" | "in_progress" | "done" | "cancelled"
       task_type:
@@ -1323,7 +1323,7 @@ export const Constants = {
         "lost",
         "disqualified",
       ],
-      score_band: ["hot", "warm", "cold", "disqualified"],
+      score_band: ["hot", "warm", "qualified", "cold", "disqualified"],
       task_priority: ["low", "normal", "high", "urgent"],
       task_status: ["open", "in_progress", "done", "cancelled"],
       task_type: [
