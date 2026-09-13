@@ -15,6 +15,7 @@ const nav = [
   { to: "/forms", label: "Forms", icon: FileText },
   { to: "/tasks", label: "Tasks", icon: ClipboardList },
   { to: "/rules", label: "Rules", icon: RouteIcon },
+  { to: "/automations", label: "Automations", icon: Plug },
 ] as const;
 
 function NavItems({ close }: { close?: () => void }) {
