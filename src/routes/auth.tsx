@@ -58,8 +58,8 @@ function AuthPage() {
   return <main className="grid min-h-screen lg:grid-cols-[1.05fr_.95fr]">
     <section className="hidden bg-primary p-12 text-primary-foreground lg:flex lg:flex-col">
       <div className="flex items-center gap-3 font-semibold"><span className="flex size-9 items-center justify-center rounded-md bg-primary-foreground/15"><Flower2 /></span><span className="font-display text-2xl">Poppy</span></div>
-      <div className="my-auto max-w-xl"><p className="mb-5 text-sm font-semibold uppercase tracking-wider text-primary-foreground/70">A clearer path from enquiry to customer</p><h1 className="font-display text-6xl leading-[1.05]">Every lead, qualified and moving forward.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-primary-foreground/75">Capture enquiries, score intent, route ownership, and keep every follow-up visible.</p></div>
-      <p className="text-sm text-primary-foreground/60">Built for teams that value momentum.</p>
+      <div className="my-auto max-w-xl"><p className="mb-5 text-sm font-semibold uppercase tracking-wider text-primary-foreground/70">Leads that pop up, sorted</p><h1 className="font-display text-6xl leading-[1.05]">Turn scattered enquiries into clear next actions.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-primary-foreground/75">Poppy captures project enquiries, scores them, picks an owner, and makes sure someone follows up.</p></div>
+      <p className="text-sm text-primary-foreground/60">Made for freelancers, studios and small agencies.</p>
     </section>
     <section className="flex items-center justify-center p-6 sm:p-10">
       <div className="w-full max-w-md">
