@@ -58,7 +58,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
   const sidebar = <div className="flex h-full flex-col bg-sidebar p-4">
     <Link to="/dashboard" className="mb-8 flex items-center gap-2 px-2 font-semibold text-sidebar-foreground">
       <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span>
-      <span className="font-serif text-xl">Poppy</span>
+      <span className="font-display text-xl">Poppy</span>
     </Link>
     <div className="mb-5 rounded-md border border-sidebar-border bg-background/60 p-3">
       <p className="text-xs text-muted-foreground">Workspace</p>
@@ -82,7 +82,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
           <SheetTrigger asChild><Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation"><Menu /></Button></SheetTrigger>
           <SheetContent side="left" className="w-[280px] p-0"><SheetTitle className="sr-only">Navigation</SheetTitle>{sidebar}</SheetContent>
         </Sheet>
-        <h1 className="font-serif text-2xl font-normal md:text-3xl">{title}</h1>
+        <h1 className="font-display text-2xl font-normal md:text-3xl">{title}</h1>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" size="icon" aria-label="Notifications" title="Notifications"><Bell /></Button>
           {action}

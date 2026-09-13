@@ -57,15 +57,15 @@ function AuthPage() {
 
   return <main className="grid min-h-screen lg:grid-cols-[1.05fr_.95fr]">
     <section className="hidden bg-primary p-12 text-primary-foreground lg:flex lg:flex-col">
-      <div className="flex items-center gap-3 font-semibold"><span className="flex size-9 items-center justify-center rounded-md bg-primary-foreground/15"><Sparkles /></span><span className="font-serif text-2xl">Poppy</span></div>
-      <div className="my-auto max-w-xl"><p className="mb-5 text-sm font-semibold uppercase tracking-wider text-primary-foreground/70">A clearer path from enquiry to customer</p><h1 className="font-serif text-6xl leading-[1.05]">Every lead, qualified and moving forward.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-primary-foreground/75">Capture enquiries, score intent, route ownership, and keep every follow-up visible.</p></div>
+      <div className="flex items-center gap-3 font-semibold"><span className="flex size-9 items-center justify-center rounded-md bg-primary-foreground/15"><Sparkles /></span><span className="font-display text-2xl">Poppy</span></div>
+      <div className="my-auto max-w-xl"><p className="mb-5 text-sm font-semibold uppercase tracking-wider text-primary-foreground/70">A clearer path from enquiry to customer</p><h1 className="font-display text-6xl leading-[1.05]">Every lead, qualified and moving forward.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-primary-foreground/75">Capture enquiries, score intent, route ownership, and keep every follow-up visible.</p></div>
       <p className="text-sm text-primary-foreground/60">Built for teams that value momentum.</p>
     </section>
     <section className="flex items-center justify-center p-6 sm:p-10">
       <div className="w-full max-w-md">
-        <div className="mb-10 flex items-center gap-2 lg:hidden"><span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span><span className="font-serif text-2xl">Poppy</span></div>
+        <div className="mb-10 flex items-center gap-2 lg:hidden"><span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span><span className="font-display text-2xl">Poppy</span></div>
         <p className="text-sm font-semibold text-primary">{mode === "signup" ? "Create your account" : mode === "reset" ? "Reset your password" : "Welcome back"}</p>
-        <h2 className="mt-2 font-serif text-4xl">{mode === "signup" ? "Start your workspace" : mode === "reset" ? "Get a reset link" : "Sign in to continue"}</h2>
+        <h2 className="mt-2 font-display text-4xl">{mode === "signup" ? "Start your workspace" : mode === "reset" ? "Get a reset link" : "Sign in to continue"}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{mode === "signup" ? "Turn new enquiries into timely conversations." : "Your leads and follow-ups are waiting."}</p>
         {mode !== "reset" && <Button variant="outline" className="mt-8 h-11 w-full" onClick={google} disabled={busy}><span className="text-base font-bold">G</span> Continue with Google</Button>}
         {mode !== "reset" && <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground"><span className="h-px flex-1 bg-border" />or use email<span className="h-px flex-1 bg-border" /></div>}
