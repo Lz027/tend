@@ -48,7 +48,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
   const queryClient = useQueryClient();
   const { data } = useWorkspace();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const initials = (data?.user.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "BL";
+  const initials = (data?.user.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "PP";
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
