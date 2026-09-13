@@ -1,8 +1,8 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  Bell, ClipboardList, FileText, Gauge, LogOut, Menu, Route as RouteIcon,
-  Sparkles, Users, X,
+  Bell, ClipboardList, FileText, Flower2, Gauge, LogOut, Menu, Plug,
+  Route as RouteIcon, Users,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
