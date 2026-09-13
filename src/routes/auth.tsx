@@ -9,10 +9,10 @@ import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [
-    { title: "Sign in | Pathlight" },
-    { name: "description", content: "Sign in to your Pathlight lead workspace." },
-    { property: "og:title", content: "Sign in | Pathlight" },
-    { property: "og:description", content: "Sign in to your Pathlight lead workspace." },
+    { title: "Sign in | Poppy" },
+    { name: "description", content: "Sign in to your Poppy lead workspace." },
+    { property: "og:title", content: "Sign in | Poppy" },
+    { property: "og:description", content: "Sign in to your Poppy lead workspace." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
   ] }),
@@ -57,13 +57,13 @@ function AuthPage() {
 
   return <main className="grid min-h-screen lg:grid-cols-[1.05fr_.95fr]">
     <section className="hidden bg-primary p-12 text-primary-foreground lg:flex lg:flex-col">
-      <div className="flex items-center gap-3 font-semibold"><span className="flex size-9 items-center justify-center rounded-md bg-primary-foreground/15"><Sparkles /></span><span className="font-serif text-2xl">Pathlight</span></div>
+      <div className="flex items-center gap-3 font-semibold"><span className="flex size-9 items-center justify-center rounded-md bg-primary-foreground/15"><Sparkles /></span><span className="font-serif text-2xl">Poppy</span></div>
       <div className="my-auto max-w-xl"><p className="mb-5 text-sm font-semibold uppercase tracking-wider text-primary-foreground/70">A clearer path from enquiry to customer</p><h1 className="font-serif text-6xl leading-[1.05]">Every lead, qualified and moving forward.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-primary-foreground/75">Capture enquiries, score intent, route ownership, and keep every follow-up visible.</p></div>
       <p className="text-sm text-primary-foreground/60">Built for teams that value momentum.</p>
     </section>
     <section className="flex items-center justify-center p-6 sm:p-10">
       <div className="w-full max-w-md">
-        <div className="mb-10 flex items-center gap-2 lg:hidden"><span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span><span className="font-serif text-2xl">Pathlight</span></div>
+        <div className="mb-10 flex items-center gap-2 lg:hidden"><span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground"><Sparkles className="size-4" /></span><span className="font-serif text-2xl">Poppy</span></div>
         <p className="text-sm font-semibold text-primary">{mode === "signup" ? "Create your account" : mode === "reset" ? "Reset your password" : "Welcome back"}</p>
         <h2 className="mt-2 font-serif text-4xl">{mode === "signup" ? "Start your workspace" : mode === "reset" ? "Get a reset link" : "Sign in to continue"}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{mode === "signup" ? "Turn new enquiries into timely conversations." : "Your leads and follow-ups are waiting."}</p>
@@ -77,7 +77,7 @@ function AuthPage() {
           {message && <p className="rounded-md bg-accent p-3 text-sm text-accent-foreground">{message}</p>}
           <Button className="h-11 w-full" disabled={busy}>{busy ? "Please wait…" : mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}<ArrowRight /></Button>
         </form>
-        <p className="mt-7 text-center text-sm text-muted-foreground">{mode === "signup" ? "Already have an account?" : "New to Pathlight?"} <button className="font-semibold text-primary" onClick={() => setMode(mode === "signup" ? "signin" : "signup")}>{mode === "signup" ? "Sign in" : "Create an account"}</button></p>
+        <p className="mt-7 text-center text-sm text-muted-foreground">{mode === "signup" ? "Already have an account?" : "New to Poppy?"} <button className="font-semibold text-primary" onClick={() => setMode(mode === "signup" ? "signin" : "signup")}>{mode === "signup" ? "Sign in" : "Create an account"}</button></p>
       </div>
     </section>
   </main>;

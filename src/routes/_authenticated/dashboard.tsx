@@ -7,8 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [
-    { title: "Lead overview | Pathlight" }, { name: "description", content: "Your lead pipeline, follow-ups, and recent activity." },
-    { property: "og:title", content: "Lead overview | Pathlight" }, { property: "og:description", content: "Your lead pipeline, follow-ups, and recent activity." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
+    { title: "Lead overview | Poppy" }, { name: "description", content: "Your lead pipeline, follow-ups, and recent activity." },
+    { property: "og:title", content: "Lead overview | Poppy" }, { property: "og:description", content: "Your lead pipeline, follow-ups, and recent activity." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }), component: Dashboard,
 });
 

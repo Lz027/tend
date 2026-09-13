@@ -8,9 +8,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated/forms")({
   head: () => ({
     meta: [
-      { title: "Forms | Pathlight" },
+      { title: "Forms | Poppy" },
       { name: "description", content: "Create and manage lead capture forms." },
-      { property: "og:title", content: "Forms | Pathlight" },
+      { property: "og:title", content: "Forms | Poppy" },
       { property: "og:description", content: "Create and manage lead capture forms." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
