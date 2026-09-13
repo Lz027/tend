@@ -1,68 +1,81 @@
-# Pathlight Brand Guidelines
+# Poppy Brand Guidelines
 
 ## Product name
 
-**Pathlight**
+**Poppy**
 
-A calm, directional name that suggests clarity and forward momentum for sales and lead teams.
+Bright, short, friendly, easy to say and spell. It suggests something cheerful that "pops up"
+— which is exactly what a new enquiry does.
 
-Alternatives considered:
-- Converlane
-- Northlane
-- Beaconlane
+Tagline: **Leads that pop up, sorted.**
 
 ## Positioning
 
-Pathlight is a lead workspace for small teams who want to turn enquiries into customers without losing momentum. It captures leads through published forms, scores and routes them automatically, creates follow-up tasks, and keeps every touchpoint visible on a timeline.
+Poppy is a lead workspace for small creative teams — freelancers, web and design agencies,
+studios, and local service businesses — who need to manage project enquiries without the
+weight of a traditional CRM.
+
+Core promise: **Poppy turns scattered enquiries into clear next actions.**
+
+Poppy owns the lead record, qualification, routing, tasks, timeline and event history.
+Make, n8n and Zapier are optional connectors for data in and events out. Poppy is not an
+automation builder.
 
 ## Personality
 
-Professional and calm.
+Playful, warm, confident, efficient, approachable. Clear rather than corporate.
 
-- Clear over clever.
-- Trustworthy, not flashy.
-- Helpful without being chatty.
-- Confident in motion: every lead is "moving forward."
+- Organised does not have to mean cold.
+- Every screen answers "what should happen next?"
+- Celebrate briefly, then get out of the way.
 
-## Tagline options
+## Colour palette
 
-- "Every lead, qualified and moving forward."
-- "A clearer path from enquiry to customer."
-- "Turn enquiries into timely conversations."
+| Token | Value | Usage |
+|-------|-------|-------|
+| Primary | Berry violet `#5b5bd6` | Buttons, links, active nav, brand moments |
+| Secondary | Violet `#8b5cf6` | Secondary actions, charts, gradients |
+| Accent | Pink `#f472b6` | Hot leads, highlights, playful emphasis |
+| Highlight | Warm yellow `#fde68a` | Warm band, callouts, badges |
+| Success | Mint | Qualified band, healthy connections |
+| Destructive | Coral red | Overdue, failed deliveries, destructive actions |
+| Background | Soft off-white | Page background |
+| Foreground | Charcoal violet | Body text |
+| Border | Lavender grey | Cards, dividers, inputs |
 
-## Color palette
-
-Keep the existing violet-tinted workspace with mint and coral accents.
-
-| Token | Usage |
-|-------|-------|
-| Violet (`#635bff` / primary) | Buttons, links, active states, brand moments |
-| Mint | Success, positive signals, Hot/Warm lead accents |
-| Coral | Urgent flags, overdue tasks, destructive actions |
-| Warm white (`#fcfbf8`) | Page backgrounds |
-| Soft slate | Body text, borders, muted labels |
-
-The app uses semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`, etc.) so the palette can be retuned in `src/styles.css` without touching components.
+All values live as semantic tokens in `src/styles.css` (oklch). Components must use
+`bg-primary`, `text-muted-foreground`, `score-hot` and friends — never raw colour classes.
 
 ## Typography
 
-- **Headings**: Georgia, serif — for page titles and major section headings.
-- **Body / UI**: system sans-serif stack — clean, readable, neutral.
+- **Headings**: Fredoka — rounded display face, friendly and confident.
+- **Body / UI**: Nunito Sans — clean, readable, warm.
+
+## Shape and motion
+
+- Rounded cards (radius `0.9rem` and up), chunky pill status badges.
+- Soft shadows, generous padding, plenty of breathing room.
+- Motion is purposeful: a light lift on hover, a small press-scale on click (`pop-press`).
+  No decorative animation.
 
 ## Logo and iconography
 
-- Primary mark: a spark/star icon inside a rounded square (currently `Sparkles` from Lucide).
-- Use the mark consistently in the sidebar, auth panel, and favicon.
-- Keep icons simple and line-based; prefer Lucide throughout.
+- Primary mark: a simple poppy bloom / spark inside a rounded square in berry violet.
+- Use it in the sidebar, the auth panel, public forms and the favicon.
+- Icons stay simple and line-based; Lucide throughout.
 
 ## Voice and tone
 
 | Do | Don't |
 |----|-------|
-| Use plain, action-oriented labels: "Create form", "Assign lead" | Use jargon like "pipeline velocity" or "conversion optimization" |
-| Write helper text as a short sentence | Use tooltips that state the obvious |
-| Confirm outcomes: "Form published. Share this link." | Over-celebrate with exclamation marks |
-| Use "you" and "your team" | Use "users" or "leads" as abstract labels |
+| "Your pipeline is clear. New opportunities will pop up here." | "No leads found." |
+| "Connect your tools." | "Webhook configuration." |
+| "This connection needs attention." | "Failed delivery." |
+| "Contact Maya within 4 hours." | "SLA breach imminent." |
+| Use "you" and "your team" | Use "users" and "entities" |
+
+Friendly, but still professional enough for a business workspace. No exclamation-mark spam,
+no jargon like "pipeline velocity".
 
 ## Naming conventions in the app
 
@@ -71,10 +84,21 @@ The app uses semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`, et
 - An entry submitted through a form is a **submission**.
 - A scheduled action tied to a lead is a **task**.
 - A workspace member's access level is a **role**.
-- Lead temperature is a **score band**: Hot, Warm, Cold, Disqualified.
+- Lead temperature is a **score band**: Cold, Warm, Qualified, Hot.
+- Follow-up health is **engagement**: On track, At risk, Overdue.
+- An external connection is a **connection** (inbound source or outbound endpoint).
 
-## Responsive behavior
+## Score bands
+
+```text
+0–29    Cold
+30–59   Warm
+60–79   Qualified
+80–100  Hot
+```
+
+## Responsive behaviour
 
 - Desktop: fixed 240 px left sidebar rail.
-- Mobile: hidden sidebar with a sheet drawer; keep header sticky.
+- Mobile: sheet drawer navigation, sticky header.
 - Touch targets minimum 44 px.
