@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFormsRouteImport } from './routes/_authenticated/forms'
 import { Route as AuthenticatedFormsNewRouteImport } from './routes/_authenticated/forms.new'
+import { Route as ApiPublicFormsSlugRouteImport } from './routes/api/public/forms.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,11 @@ const AuthenticatedFormsNewRoute = AuthenticatedFormsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AuthenticatedFormsRoute,
 } as any)
+const ApiPublicFormsSlugRoute = ApiPublicFormsSlugRouteImport.update({
+  id: '/api/public/forms/$slug',
+  path: '/api/public/forms/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
   '/forms/new': typeof AuthenticatedFormsNewRoute
+  '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
   '/forms/new': typeof AuthenticatedFormsNewRoute
+  '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +76,25 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/forms': typeof AuthenticatedFormsRouteWithChildren
   '/_authenticated/forms/new': typeof AuthenticatedFormsNewRoute
+  '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/forms' | '/forms/new'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/forms'
+    | '/forms/new'
+    | '/api/public/forms/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/forms' | '/forms/new'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/forms'
+    | '/forms/new'
+    | '/api/public/forms/$slug'
   id:
     | '__root__'
     | '/'
@@ -82,12 +103,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/forms'
     | '/_authenticated/forms/new'
+    | '/api/public/forms/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicFormsSlugRoute: typeof ApiPublicFormsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFormsNewRouteImport
       parentRoute: typeof AuthenticatedFormsRoute
     }
+    '/api/public/forms/$slug': {
+      id: '/api/public/forms/$slug'
+      path: '/api/public/forms/$slug'
+      fullPath: '/api/public/forms/$slug'
+      preLoaderRoute: typeof ApiPublicFormsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -165,6 +195,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicFormsSlugRoute: ApiPublicFormsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
