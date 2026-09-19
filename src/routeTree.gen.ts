@@ -17,6 +17,8 @@ import { Route as AuthenticatedFormsRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as FSlugRouteImport } from './routes/f.$slug'
 import { Route as AuthenticatedFormsNewRouteImport } from './routes/_authenticated/forms.new'
+import { Route as AuthenticatedLeadsIndexRouteImport } from './routes/_authenticated/leads.index'
+import { Route as AuthenticatedLeadsLeadIdRouteImport } from './routes/_authenticated/leads.$leadId'
 import { Route as ApiPublicFormsSlugRouteImport } from './routes/api/public/forms.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -58,6 +60,17 @@ const AuthenticatedFormsNewRoute = AuthenticatedFormsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AuthenticatedFormsRoute,
 } as any)
+const AuthenticatedLeadsIndexRoute = AuthenticatedLeadsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedLeadsRoute,
+} as any)
+const AuthenticatedLeadsLeadIdRoute =
+  AuthenticatedLeadsLeadIdRouteImport.update({
+    id: '/$leadId',
+    path: '/$leadId',
+    getParentRoute: () => AuthenticatedLeadsRoute,
+  } as any)
 const ApiPublicFormsSlugRoute = ApiPublicFormsSlugRouteImport.update({
   id: '/api/public/forms/$slug',
   path: '/api/public/forms/$slug',
@@ -69,9 +82,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
-  '/leads': typeof AuthenticatedLeadsRoute
+  '/leads': typeof AuthenticatedLeadsRouteWithChildren
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
+  '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -79,9 +94,10 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
-  '/leads': typeof AuthenticatedLeadsRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
+  '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/leads': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRoutesById {
@@ -91,9 +107,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/forms': typeof AuthenticatedFormsRouteWithChildren
-  '/_authenticated/leads': typeof AuthenticatedLeadsRoute
+  '/_authenticated/leads': typeof AuthenticatedLeadsRouteWithChildren
   '/f/$slug': typeof FSlugRoute
   '/_authenticated/forms/new': typeof AuthenticatedFormsNewRoute
+  '/_authenticated/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/_authenticated/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
 }
 export interface FileRouteTypes {
@@ -106,6 +124,8 @@ export interface FileRouteTypes {
     | '/leads'
     | '/f/$slug'
     | '/forms/new'
+    | '/leads/$leadId'
+    | '/leads/'
     | '/api/public/forms/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -113,9 +133,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forms'
-    | '/leads'
     | '/f/$slug'
     | '/forms/new'
+    | '/leads/$leadId'
+    | '/leads'
     | '/api/public/forms/$slug'
   id:
     | '__root__'
@@ -127,6 +148,8 @@ export interface FileRouteTypes {
     | '/_authenticated/leads'
     | '/f/$slug'
     | '/_authenticated/forms/new'
+    | '/_authenticated/leads/$leadId'
+    | '/_authenticated/leads/'
     | '/api/public/forms/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +219,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFormsNewRouteImport
       parentRoute: typeof AuthenticatedFormsRoute
     }
+    '/_authenticated/leads/': {
+      id: '/_authenticated/leads/'
+      path: '/'
+      fullPath: '/leads/'
+      preLoaderRoute: typeof AuthenticatedLeadsIndexRouteImport
+      parentRoute: typeof AuthenticatedLeadsRoute
+    }
+    '/_authenticated/leads/$leadId': {
+      id: '/_authenticated/leads/$leadId'
+      path: '/$leadId'
+      fullPath: '/leads/$leadId'
+      preLoaderRoute: typeof AuthenticatedLeadsLeadIdRouteImport
+      parentRoute: typeof AuthenticatedLeadsRoute
+    }
     '/api/public/forms/$slug': {
       id: '/api/public/forms/$slug'
       path: '/api/public/forms/$slug'
@@ -217,16 +254,29 @@ const AuthenticatedFormsRouteChildren: AuthenticatedFormsRouteChildren = {
 const AuthenticatedFormsRouteWithChildren =
   AuthenticatedFormsRoute._addFileChildren(AuthenticatedFormsRouteChildren)
 
+interface AuthenticatedLeadsRouteChildren {
+  AuthenticatedLeadsLeadIdRoute: typeof AuthenticatedLeadsLeadIdRoute
+  AuthenticatedLeadsIndexRoute: typeof AuthenticatedLeadsIndexRoute
+}
+
+const AuthenticatedLeadsRouteChildren: AuthenticatedLeadsRouteChildren = {
+  AuthenticatedLeadsLeadIdRoute: AuthenticatedLeadsLeadIdRoute,
+  AuthenticatedLeadsIndexRoute: AuthenticatedLeadsIndexRoute,
+}
+
+const AuthenticatedLeadsRouteWithChildren =
+  AuthenticatedLeadsRoute._addFileChildren(AuthenticatedLeadsRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFormsRoute: typeof AuthenticatedFormsRouteWithChildren
-  AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
+  AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFormsRoute: AuthenticatedFormsRouteWithChildren,
-  AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
+  AuthenticatedLeadsRoute: AuthenticatedLeadsRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
