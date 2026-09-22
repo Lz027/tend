@@ -12,14 +12,18 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAutomationsRouteImport } from './routes/_authenticated/automations'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFormsRouteImport } from './routes/_authenticated/forms'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as AuthenticatedRulesRouteImport } from './routes/_authenticated/rules'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as FSlugRouteImport } from './routes/f.$slug'
 import { Route as AuthenticatedFormsNewRouteImport } from './routes/_authenticated/forms.new'
 import { Route as AuthenticatedLeadsIndexRouteImport } from './routes/_authenticated/leads.index'
 import { Route as AuthenticatedLeadsLeadIdRouteImport } from './routes/_authenticated/leads.$leadId'
 import { Route as ApiPublicFormsSlugRouteImport } from './routes/api/public/forms.$slug'
+import { Route as ApiPublicIntakeTokenRouteImport } from './routes/api/public/intake.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,6 +39,12 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAutomationsRoute =
+  AuthenticatedAutomationsRouteImport.update({
+    id: '/automations',
+    path: '/automations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -48,6 +58,16 @@ const AuthenticatedFormsRoute = AuthenticatedFormsRouteImport.update({
 const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRulesRoute = AuthenticatedRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const FSlugRoute = FSlugRouteImport.update({
@@ -76,81 +96,110 @@ const ApiPublicFormsSlugRoute = ApiPublicFormsSlugRouteImport.update({
   path: '/api/public/forms/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicIntakeTokenRoute = ApiPublicIntakeTokenRouteImport.update({
+  id: '/api/public/intake/$token',
+  path: '/api/public/intake/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/automations': typeof AuthenticatedAutomationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
   '/leads': typeof AuthenticatedLeadsRouteWithChildren
+  '/rules': typeof AuthenticatedRulesRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
   '/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
+  '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/automations': typeof AuthenticatedAutomationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
+  '/rules': typeof AuthenticatedRulesRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
   '/leads': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
+  '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/automations': typeof AuthenticatedAutomationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/forms': typeof AuthenticatedFormsRouteWithChildren
   '/_authenticated/leads': typeof AuthenticatedLeadsRouteWithChildren
+  '/_authenticated/rules': typeof AuthenticatedRulesRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/_authenticated/forms/new': typeof AuthenticatedFormsNewRoute
   '/_authenticated/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
   '/_authenticated/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
+  '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/automations'
     | '/dashboard'
     | '/forms'
     | '/leads'
+    | '/rules'
+    | '/tasks'
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
     | '/leads/'
     | '/api/public/forms/$slug'
+    | '/api/public/intake/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/automations'
     | '/dashboard'
     | '/forms'
+    | '/rules'
+    | '/tasks'
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
     | '/leads'
     | '/api/public/forms/$slug'
+    | '/api/public/intake/$token'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/automations'
     | '/_authenticated/dashboard'
     | '/_authenticated/forms'
     | '/_authenticated/leads'
+    | '/_authenticated/rules'
+    | '/_authenticated/tasks'
     | '/f/$slug'
     | '/_authenticated/forms/new'
     | '/_authenticated/leads/$leadId'
     | '/_authenticated/leads/'
     | '/api/public/forms/$slug'
+    | '/api/public/intake/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -159,6 +208,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   FSlugRoute: typeof FSlugRoute
   ApiPublicFormsSlugRoute: typeof ApiPublicFormsSlugRoute
+  ApiPublicIntakeTokenRoute: typeof ApiPublicIntakeTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -184,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/automations': {
+      id: '/_authenticated/automations'
+      path: '/automations'
+      fullPath: '/automations'
+      preLoaderRoute: typeof AuthenticatedAutomationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -203,6 +260,20 @@ declare module '@tanstack/react-router' {
       path: '/leads'
       fullPath: '/leads'
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rules': {
+      id: '/_authenticated/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof AuthenticatedRulesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/f/$slug': {
@@ -240,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicFormsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/intake/$token': {
+      id: '/api/public/intake/$token'
+      path: '/api/public/intake/$token'
+      fullPath: '/api/public/intake/$token'
+      preLoaderRoute: typeof ApiPublicIntakeTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -268,15 +346,21 @@ const AuthenticatedLeadsRouteWithChildren =
   AuthenticatedLeadsRoute._addFileChildren(AuthenticatedLeadsRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAutomationsRoute: typeof AuthenticatedAutomationsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFormsRoute: typeof AuthenticatedFormsRouteWithChildren
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRouteWithChildren
+  AuthenticatedRulesRoute: typeof AuthenticatedRulesRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAutomationsRoute: AuthenticatedAutomationsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFormsRoute: AuthenticatedFormsRouteWithChildren,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRouteWithChildren,
+  AuthenticatedRulesRoute: AuthenticatedRulesRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -288,6 +372,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   FSlugRoute: FSlugRoute,
   ApiPublicFormsSlugRoute: ApiPublicFormsSlugRoute,
+  ApiPublicIntakeTokenRoute: ApiPublicIntakeTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
