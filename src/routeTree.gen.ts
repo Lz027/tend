@@ -15,6 +15,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedFormsRouteImport } from './routes/_authenticated/forms'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as AuthenticatedRulesRouteImport } from './routes/_authenticated/rules'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as FSlugRouteImport } from './routes/f.$slug'
 import { Route as AuthenticatedFormsNewRouteImport } from './routes/_authenticated/forms.new'
 import { Route as AuthenticatedLeadsIndexRouteImport } from './routes/_authenticated/leads.index'
@@ -50,6 +52,16 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRulesRoute = AuthenticatedRulesRouteImport.update({
+  id: '/rules',
+  path: '/rules',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const FSlugRoute = FSlugRouteImport.update({
   id: '/f/$slug',
   path: '/f/$slug',
@@ -83,6 +95,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
   '/leads': typeof AuthenticatedLeadsRouteWithChildren
+  '/rules': typeof AuthenticatedRulesRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
@@ -94,6 +108,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/forms': typeof AuthenticatedFormsRouteWithChildren
+  '/rules': typeof AuthenticatedRulesRoute
+  '/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
@@ -108,6 +124,8 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/forms': typeof AuthenticatedFormsRouteWithChildren
   '/_authenticated/leads': typeof AuthenticatedLeadsRouteWithChildren
+  '/_authenticated/rules': typeof AuthenticatedRulesRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/_authenticated/forms/new': typeof AuthenticatedFormsNewRoute
   '/_authenticated/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
@@ -122,6 +140,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forms'
     | '/leads'
+    | '/rules'
+    | '/tasks'
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
@@ -133,6 +153,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forms'
+    | '/rules'
+    | '/tasks'
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
@@ -146,6 +168,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/forms'
     | '/_authenticated/leads'
+    | '/_authenticated/rules'
+    | '/_authenticated/tasks'
     | '/f/$slug'
     | '/_authenticated/forms/new'
     | '/_authenticated/leads/$leadId'
@@ -203,6 +227,20 @@ declare module '@tanstack/react-router' {
       path: '/leads'
       fullPath: '/leads'
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rules': {
+      id: '/_authenticated/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof AuthenticatedRulesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/f/$slug': {
@@ -271,12 +309,16 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFormsRoute: typeof AuthenticatedFormsRouteWithChildren
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRouteWithChildren
+  AuthenticatedRulesRoute: typeof AuthenticatedRulesRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFormsRoute: AuthenticatedFormsRouteWithChildren,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRouteWithChildren,
+  AuthenticatedRulesRoute: AuthenticatedRulesRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
