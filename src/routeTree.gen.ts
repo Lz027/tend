@@ -19,6 +19,7 @@ import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedRulesRouteImport } from './routes/_authenticated/rules'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 import { Route as FSlugRouteImport } from './routes/f.$slug'
+import { Route as AuthenticatedFormsIndexRouteImport } from './routes/_authenticated/forms.index'
 import { Route as AuthenticatedFormsNewRouteImport } from './routes/_authenticated/forms.new'
 import { Route as AuthenticatedLeadsIndexRouteImport } from './routes/_authenticated/leads.index'
 import { Route as AuthenticatedLeadsLeadIdRouteImport } from './routes/_authenticated/leads.$leadId'
@@ -75,6 +76,11 @@ const FSlugRoute = FSlugRouteImport.update({
   path: '/f/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedFormsIndexRoute = AuthenticatedFormsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedFormsRoute,
+} as any)
 const AuthenticatedFormsNewRoute = AuthenticatedFormsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/forms/': typeof AuthenticatedFormsIndexRoute
   '/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
   '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
@@ -123,12 +130,12 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/automations': typeof AuthenticatedAutomationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/forms': typeof AuthenticatedFormsRouteWithChildren
   '/rules': typeof AuthenticatedRulesRoute
   '/tasks': typeof AuthenticatedTasksRoute
   '/f/$slug': typeof FSlugRoute
   '/forms/new': typeof AuthenticatedFormsNewRoute
   '/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/forms': typeof AuthenticatedFormsIndexRoute
   '/leads': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
   '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
@@ -147,6 +154,7 @@ export interface FileRoutesById {
   '/f/$slug': typeof FSlugRoute
   '/_authenticated/forms/new': typeof AuthenticatedFormsNewRoute
   '/_authenticated/leads/$leadId': typeof AuthenticatedLeadsLeadIdRoute
+  '/_authenticated/forms/': typeof AuthenticatedFormsIndexRoute
   '/_authenticated/leads/': typeof AuthenticatedLeadsIndexRoute
   '/api/public/forms/$slug': typeof ApiPublicFormsSlugRoute
   '/api/public/intake/$token': typeof ApiPublicIntakeTokenRoute
@@ -165,6 +173,7 @@ export interface FileRouteTypes {
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
+    | '/forms/'
     | '/leads/'
     | '/api/public/forms/$slug'
     | '/api/public/intake/$token'
@@ -174,12 +183,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/automations'
     | '/dashboard'
-    | '/forms'
     | '/rules'
     | '/tasks'
     | '/f/$slug'
     | '/forms/new'
     | '/leads/$leadId'
+    | '/forms'
     | '/leads'
     | '/api/public/forms/$slug'
     | '/api/public/intake/$token'
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/f/$slug'
     | '/_authenticated/forms/new'
     | '/_authenticated/leads/$leadId'
+    | '/_authenticated/forms/'
     | '/_authenticated/leads/'
     | '/api/public/forms/$slug'
     | '/api/public/intake/$token'
@@ -283,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/forms/': {
+      id: '/_authenticated/forms/'
+      path: '/'
+      fullPath: '/forms/'
+      preLoaderRoute: typeof AuthenticatedFormsIndexRouteImport
+      parentRoute: typeof AuthenticatedFormsRoute
+    }
     '/_authenticated/forms/new': {
       id: '/_authenticated/forms/new'
       path: '/new'
@@ -323,10 +340,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedFormsRouteChildren {
   AuthenticatedFormsNewRoute: typeof AuthenticatedFormsNewRoute
+  AuthenticatedFormsIndexRoute: typeof AuthenticatedFormsIndexRoute
 }
 
 const AuthenticatedFormsRouteChildren: AuthenticatedFormsRouteChildren = {
   AuthenticatedFormsNewRoute: AuthenticatedFormsNewRoute,
+  AuthenticatedFormsIndexRoute: AuthenticatedFormsIndexRoute,
 }
 
 const AuthenticatedFormsRouteWithChildren =
