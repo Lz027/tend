@@ -114,10 +114,15 @@ function NewFormPage() {
   };
 
   const save = async () => {
-    if (!workspaceId || !name.trim() || !slug.trim()) return;
+    if (!workspaceId) return toast.error("Set up your workspace first.");
+    if (!name.trim()) return toast.error("Give the form a name.");
+    if (!slug.trim()) return toast.error("Add a public link name.");
     setSaving(true);
     const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return;
+    if (!userData.user) {
+      setSaving(false);
+      return toast.error("Please sign in again.");
+    }
 
     const { error } = await supabase.from("forms").insert({
       workspace_id: workspaceId,
