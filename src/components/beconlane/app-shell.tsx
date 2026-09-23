@@ -48,7 +48,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
   const queryClient = useQueryClient();
   const { data } = useWorkspace();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const initials = (data?.user.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "PP";
+  const initials = (data?.user.user_metadata?.['full_name'] as string | undefined)?.slice(0, 2).toUpperCase() || data?.user.email?.slice(0, 2).toUpperCase() || "PP";
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -69,7 +69,7 @@ export function AppShell({ children, title, action }: { children: ReactNode; tit
     <div className="mt-auto border-t border-sidebar-border pt-4">
       <div className="flex items-center gap-3 px-2">
         <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground">{initials}</span>
-        <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{data?.user.user_metadata?.full_name || "Account"}</p><p className="truncate text-xs text-muted-foreground">{data?.user.email}</p></div>
+        <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{data?.user.user_metadata?.['full_name'] || "Account"}</p><p className="truncate text-xs text-muted-foreground">{data?.user.email}</p></div>
         <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out" title="Sign out"><LogOut /></Button>
       </div>
     </div>

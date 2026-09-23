@@ -60,9 +60,9 @@ const numeric = (v: unknown) => {
 
 export async function processLeadIntake(input: IntakeInput): Promise<IntakeResult> {
   const v = input.values;
-  const email = text(v.email)?.toLowerCase() ?? null;
-  const phone = text(v.phone);
-  const fullName = text(v.name) ?? text(v.full_name);
+  const email = text(v['email'])?.toLowerCase() ?? null;
+  const phone = text(v['phone']);
+  const fullName = text(v['name']) ?? text(v['full_name']);
 
   if (!email && !phone) throw new Error("An email address or phone number is required.");
 
@@ -122,13 +122,13 @@ export async function processLeadIntake(input: IntakeInput): Promise<IntakeResul
     full_name: fullName,
     email,
     phone,
-    company: text(v.company),
-    job_title: text(v.job_title),
-    country: text(v.country),
-    interest: text(v.interest),
-    budget: numeric(v.budget),
-    message: text(v.message),
-    preferred_contact: text(v.preferred_contact),
+    company: text(v['company']),
+    job_title: text(v['job_title']),
+    country: text(v['country']),
+    interest: text(v['interest']),
+    budget: numeric(v['budget']),
+    message: text(v['message']),
+    preferred_contact: text(v['preferred_contact']),
     source: input.source,
     utm_source: input.meta.utm_source ?? null,
     custom_fields: input.custom,

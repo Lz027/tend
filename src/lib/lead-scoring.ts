@@ -206,7 +206,7 @@ export function routeLead(
     }
 
     if (rule.strategy === "round_robin" && members.length > 0) {
-      const picked = members[Math.abs(roundRobinIndex) % members.length];
+      const picked = members[Math.abs(roundRobinIndex) % members.length]!;
       return {
         ownerId: picked.user_id,
         strategy: "round_robin",
@@ -217,7 +217,7 @@ export function routeLead(
   }
 
   if (members.length > 0) {
-    const picked = members[Math.abs(roundRobinIndex) % members.length];
+    const picked = members[Math.abs(roundRobinIndex) % members.length]!;
     return {
       ownerId: picked.user_id,
       strategy: "round_robin",
