@@ -95,9 +95,9 @@ function FormsPage() {
                   <Copy className="mr-1 size-3.5" /> Copy link
                 </Button>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link to="/forms/$formId" params={{ formId: form.id }}>
-                    Edit <ArrowRight className="ml-1 size-3.5" />
-                  </Link>
+                  <a href={publicUrl(form.slug)} target="_blank" rel="noreferrer">
+                    Open <ArrowRight className="ml-1 size-3.5" />
+                  </a>
                 </Button>
               </div>
             </div>

@@ -81,7 +81,7 @@ function PublicFormPage() {
     };
   }, [slug]);
 
-  const fields = ((form?.fields as FormField[] | undefined) ?? [])
+  const fields = ((form?.['fields'] as FormField[] | undefined) ?? [])
     .slice()
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 

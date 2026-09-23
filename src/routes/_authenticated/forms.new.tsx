@@ -90,7 +90,7 @@ function NewFormPage() {
         id: crypto.randomUUID(),
         type,
         label,
-        key: type.startsWith("custom_") ? `custom_${Date.now()}` : undefined,
+        key: type.startsWith("custom_") ? `custom_${Date.now()}` : "",
         required: false,
         options: type === "custom_select" ? ["Option 1"] : [],
       },
@@ -108,7 +108,7 @@ function NewFormPage() {
     if (next < 0 || next >= fields.length) return;
     setFields((prev) => {
       const copy = [...prev];
-      [copy[index], copy[next]] = [copy[next], copy[index]];
+      [copy[index], copy[next]] = [copy[next]!, copy[index]!];
       return copy;
     });
   };
