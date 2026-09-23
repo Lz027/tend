@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/forms/new")({
@@ -90,7 +92,7 @@ function NewFormPage() {
         id: crypto.randomUUID(),
         type,
         label,
-        key: type.startsWith("custom_") ? `custom_${Date.now()}` : undefined,
+        key: type.startsWith("custom_") ? `custom_${Date.now()}` : "",
         required: false,
         options: type === "custom_select" ? ["Option 1"] : [],
       },
@@ -108,16 +110,21 @@ function NewFormPage() {
     if (next < 0 || next >= fields.length) return;
     setFields((prev) => {
       const copy = [...prev];
-      [copy[index], copy[next]] = [copy[next], copy[index]];
+      [copy[index], copy[next]] = [copy[next]!, copy[index]!];
       return copy;
     });
   };
 
   const save = async () => {
-    if (!workspaceId || !name.trim() || !slug.trim()) return;
+    if (!workspaceId) return toast.error("Set up your workspace first.");
+    if (!name.trim()) return toast.error("Give the form a name.");
+    if (!slug.trim()) return toast.error("Add a public link name.");
     setSaving(true);
     const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user) return;
+    if (!userData.user) {
+      setSaving(false);
+      return toast.error("Please sign in again.");
+    }
 
     const { error } = await supabase.from("forms").insert({
       workspace_id: workspaceId,
@@ -143,9 +150,12 @@ function NewFormPage() {
     });
 
     setSaving(false);
-    if (!error) {
-      void navigate({ to: "/forms" });
+    if (error) {
+      toast.error(error.message);
+      return;
     }
+    toast.success("Form published.");
+    void navigate({ to: "/forms" });
   };
 
   return (

@@ -71,7 +71,7 @@ export const Route = createFileRoute("/api/public/intake/$token")({
             .update({
               received_count: (source.received_count ?? 0) + 1,
               last_received_at: new Date().toISOString(),
-              sample_payload: body,
+              sample_payload: body as never,
             })
             .eq("id", source.id);
 
@@ -80,7 +80,7 @@ export const Route = createFileRoute("/api/public/intake/$token")({
           const message = error instanceof Error ? error.message : "Could not accept this lead.";
           await supabaseAdmin
             .from("automation_sources")
-            .update({ error_count: (source.error_count ?? 0) + 1, last_error: message, sample_payload: body })
+            .update({ error_count: (source.error_count ?? 0) + 1, last_error: message, sample_payload: body as never })
             .eq("id", source.id);
           return json({ error: message }, 400);
         }

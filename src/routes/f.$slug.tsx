@@ -81,7 +81,7 @@ function PublicFormPage() {
     };
   }, [slug]);
 
-  const fields = ((form?.fields as FormField[] | undefined) ?? [])
+  const fields = ((form?.['fields'] as FormField[] | undefined) ?? [])
     .slice()
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
@@ -151,7 +151,7 @@ function PublicFormPage() {
           <span className="flex size-8 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Flower2 className="size-4" />
           </span>
-          <span className="font-display text-xl">{String(form.name)}</span>
+          <span className="font-display text-xl">{String(form['name'])}</span>
         </div>
 
         {done ? (
@@ -161,7 +161,7 @@ function PublicFormPage() {
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-5">
-            {form.description ? <p className="text-muted-foreground">{String(form.description)}</p> : null}
+            {form['description'] ? <p className="text-muted-foreground">{String(form['description'])}</p> : null}
 
             {fields.map((field) => (
               <div key={field.id} className="space-y-2">
@@ -226,17 +226,17 @@ function PublicFormPage() {
               />
             </div>
 
-            {form.consent_required ? (
+            {form['consent_required'] ? (
               <label className="flex items-start gap-3 rounded-2xl bg-muted/60 p-4 text-sm">
                 <Checkbox checked={consent} onCheckedChange={(c) => setConsent(Boolean(c))} />
-                <span>{String(form.consent_text)}</span>
+                <span>{String(form['consent_text'])}</span>
               </label>
             ) : null}
 
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
             <Button type="submit" className="pop-press w-full" disabled={submitting}>
-              {submitting ? <Loader2 className="size-4 animate-spin" /> : String(form.submit_text ?? "Submit")}
+              {submitting ? <Loader2 className="size-4 animate-spin" /> : String(form['submit_text'] ?? "Submit")}
             </Button>
             <p className="text-center text-xs text-muted-foreground">Powered by Poppy</p>
           </form>
