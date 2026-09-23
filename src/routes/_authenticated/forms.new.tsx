@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/forms/new")({
@@ -148,9 +150,12 @@ function NewFormPage() {
     });
 
     setSaving(false);
-    if (!error) {
-      void navigate({ to: "/forms" });
+    if (error) {
+      toast.error(error.message);
+      return;
     }
+    toast.success("Form published.");
+    void navigate({ to: "/forms" });
   };
 
   return (
