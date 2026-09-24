@@ -1,5 +1,5 @@
 /**
- * Poppy's explainable, rule-based lead scoring.
+ * Tend's explainable, rule-based lead scoring.
  *
  * Pure functions only — shared by the submission pipeline (server) and the
  * "Test a lead" simulator on the Rules page (browser).
@@ -60,8 +60,18 @@ export interface ScoreResult {
 }
 
 const FREE_EMAIL_DOMAINS = new Set([
-  "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com", "icloud.com",
-  "aol.com", "proton.me", "protonmail.com", "mail.com", "gmx.com", "yandex.com",
+  "gmail.com",
+  "yahoo.com",
+  "hotmail.com",
+  "outlook.com",
+  "live.com",
+  "icloud.com",
+  "aol.com",
+  "proton.me",
+  "protonmail.com",
+  "mail.com",
+  "gmx.com",
+  "yandex.com",
 ]);
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -94,7 +104,7 @@ function asText(value: unknown): string {
 
 function asNumber(value: unknown): number | null {
   if (value === null || value === undefined || value === "") return null;
-  const cleaned = String(value).replace(/[^0-9.\-]/g, "");
+  const cleaned = String(value).replace(/[^0-9.-]/g, "");
   const parsed = Number.parseFloat(cleaned);
   return Number.isFinite(parsed) ? parsed : null;
 }
@@ -226,7 +236,12 @@ export function routeLead(
     };
   }
 
-  return { ownerId: null, strategy: "none", ruleLabel: "Unassigned", reason: "No one to assign to yet" };
+  return {
+    ownerId: null,
+    strategy: "none",
+    ruleLabel: "Unassigned",
+    reason: "No one to assign to yet",
+  };
 }
 
 /** SLA window in minutes, by band. */
@@ -261,11 +276,17 @@ export function nextActionFor(input: {
     return { action: `Nothing pending — ${name} is closed.`, urgency: "low" };
   }
   if (input.overdue) {
-    return { action: `Follow up with ${name} now — the promised window has passed.`, urgency: "high" };
+    return {
+      action: `Follow up with ${name} now — the promised window has passed.`,
+      urgency: "high",
+    };
   }
   if (input.status === "new") {
     const window = slaLabel(slaMinutesFor(input.band));
-    return { action: `Contact ${name} within ${window}.`, urgency: input.band === "hot" ? "high" : "normal" };
+    return {
+      action: `Contact ${name} within ${window}.`,
+      urgency: input.band === "hot" ? "high" : "normal",
+    };
   }
   if (input.status === "contacted") {
     return { action: `Qualify ${name}: confirm budget, scope and start date.`, urgency: "normal" };

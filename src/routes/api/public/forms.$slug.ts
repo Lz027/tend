@@ -30,7 +30,7 @@ export const Route = createFileRoute("/api/public/forms/$slug")({
         }
 
         // Honeypot — silently accept, store nothing.
-        if (typeof body['company_website'] === "string" && body['company_website'].trim() !== "") {
+        if (typeof body["company_website"] === "string" && body["company_website"].trim() !== "") {
           return json({ ok: true });
         }
 
@@ -39,16 +39,19 @@ export const Route = createFileRoute("/api/public/forms/$slug")({
 
         const { data: form } = await supabaseAdmin
           .from("forms")
-          .select("id, workspace_id, is_active, consent_required, consent_text, success_message, redirect_url")
+          .select(
+            "id, workspace_id, is_active, consent_required, consent_text, success_message, redirect_url",
+          )
           .eq("slug", params.slug)
           .maybeSingle();
 
-        if (!form || !form.is_active) return json({ error: "This form is not accepting submissions." }, 404);
+        if (!form || !form.is_active)
+          return json({ error: "This form is not accepting submissions." }, 404);
 
-        const values = (body['values'] ?? {}) as Record<string, unknown>;
-        const custom = (body['custom'] ?? {}) as Record<string, unknown>;
-        const meta = (body['meta'] ?? {}) as Record<string, unknown>;
-        const consentGranted = body['consent'] === true;
+        const values = (body["values"] ?? {}) as Record<string, unknown>;
+        const custom = (body["custom"] ?? {}) as Record<string, unknown>;
+        const meta = (body["meta"] ?? {}) as Record<string, unknown>;
+        const consentGranted = body["consent"] === true;
 
         if (form.consent_required && !consentGranted) {
           return json({ error: "Please accept the consent statement." }, 400);
@@ -62,10 +65,12 @@ export const Route = createFileRoute("/api/public/forms/$slug")({
             values,
             custom,
             meta: meta as never,
-            consent: form.consent_required || consentGranted
-              ? { granted: consentGranted, text: form.consent_text, version: "1" }
-              : null,
-            idempotencyKey: typeof body['idempotency_key'] === "string" ? body['idempotency_key'] : null,
+            consent:
+              form.consent_required || consentGranted
+                ? { granted: consentGranted, text: form.consent_text, version: "1" }
+                : null,
+            idempotencyKey:
+              typeof body["idempotency_key"] === "string" ? body["idempotency_key"] : null,
           });
           return json({
             ok: true,

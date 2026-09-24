@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, GripVertical, Plus, Trash2 } from "lucide-react";
-import { AppShell, useWorkspace } from "@/components/beconlane/app-shell";
+import { AppShell, useWorkspace } from "@/components/app/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,9 +14,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated/forms/new")({
   head: () => ({
     meta: [
-      { title: "New form | Poppy" },
+      { title: "New form | Tend" },
       { name: "description", content: "Create a new lead capture form." },
-      { property: "og:title", content: "New form | Poppy" },
+      { property: "og:title", content: "New form | Tend" },
       { property: "og:description", content: "Create a new lead capture form." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -156,6 +156,7 @@ function NewFormPage() {
     }
     toast.success("Form published.");
     void navigate({ to: "/forms" });
+    return;
   };
 
   return (
@@ -195,7 +196,8 @@ function NewFormPage() {
                   placeholder="contact-sales"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Public URL will be {typeof window !== "undefined" ? window.location.origin : ""}/f/{slug || "your-slug"}
+                  Public URL will be {typeof window !== "undefined" ? window.location.origin : ""}
+                  /f/{slug || "your-slug"}
                 </p>
               </div>
               <div className="grid gap-2">
@@ -266,7 +268,9 @@ function NewFormPage() {
                           <Switch
                             id={`required-${field.id}`}
                             checked={field.required}
-                            onCheckedChange={(checked) => updateField(field.id, { required: checked })}
+                            onCheckedChange={(checked) =>
+                              updateField(field.id, { required: checked })
+                            }
                           />
                           <Label htmlFor={`required-${field.id}`} className="text-sm">
                             Required
@@ -291,7 +295,10 @@ function NewFormPage() {
                             value={field.options.join("\n")}
                             onChange={(e) =>
                               updateField(field.id, {
-                                options: e.target.value.split("\n").map((o) => o.trim()).filter(Boolean),
+                                options: e.target.value
+                                  .split("\n")
+                                  .map((o) => o.trim())
+                                  .filter(Boolean),
                               })
                             }
                             placeholder="Option 1&#10;Option 2"
@@ -318,7 +325,12 @@ function NewFormPage() {
                         ↓
                       </Button>
                     </div>
-                    <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} aria-label="Remove field">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeField(field.id)}
+                      aria-label="Remove field"
+                    >
                       <Trash2 className="size-4 text-destructive" />
                     </Button>
                   </div>
@@ -332,24 +344,45 @@ function NewFormPage() {
             <div className="mt-4 grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="submitText">Submit button text</Label>
-                <Input id="submitText" value={submitText} onChange={(e) => setSubmitText(e.target.value)} />
+                <Input
+                  id="submitText"
+                  value={submitText}
+                  onChange={(e) => setSubmitText(e.target.value)}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="successMessage">Success message</Label>
-                <Input id="successMessage" value={successMessage} onChange={(e) => setSuccessMessage(e.target.value)} />
+                <Input
+                  id="successMessage"
+                  value={successMessage}
+                  onChange={(e) => setSuccessMessage(e.target.value)}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="redirectUrl">Redirect URL (optional)</Label>
-                <Input id="redirectUrl" value={redirectUrl} onChange={(e) => setRedirectUrl(e.target.value)} placeholder="https://example.com/thanks" />
+                <Input
+                  id="redirectUrl"
+                  value={redirectUrl}
+                  onChange={(e) => setRedirectUrl(e.target.value)}
+                  placeholder="https://example.com/thanks"
+                />
               </div>
               <div className="flex items-center gap-2">
-                <Switch id="consent" checked={consentRequired} onCheckedChange={setConsentRequired} />
+                <Switch
+                  id="consent"
+                  checked={consentRequired}
+                  onCheckedChange={setConsentRequired}
+                />
                 <Label htmlFor="consent">Require consent checkbox</Label>
               </div>
               {consentRequired && (
                 <div className="grid gap-2">
                   <Label htmlFor="consentText">Consent wording</Label>
-                  <Textarea id="consentText" value={consentText} onChange={(e) => setConsentText(e.target.value)} />
+                  <Textarea
+                    id="consentText"
+                    value={consentText}
+                    onChange={(e) => setConsentText(e.target.value)}
+                  />
                 </div>
               )}
               <div className="flex items-center gap-2">

@@ -1,5 +1,5 @@
 /**
- * Poppy lead intake pipeline (server only).
+ * Tend lead intake pipeline (server only).
  *
  * validate -> dedupe -> create/update lead -> score -> route -> SLA task ->
  * timeline -> consent -> notification.
@@ -48,21 +48,22 @@ export interface IntakeResult {
 }
 
 const text = (v: unknown) => {
-  const s = typeof v === "string" ? v.trim() : v === null || v === undefined ? "" : String(v).trim();
+  const s =
+    typeof v === "string" ? v.trim() : v === null || v === undefined ? "" : String(v).trim();
   return s.length ? s.slice(0, 2000) : null;
 };
 
 const numeric = (v: unknown) => {
   if (v === null || v === undefined || v === "") return null;
-  const n = Number.parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
+  const n = Number.parseFloat(String(v).replace(/[^0-9.-]/g, ""));
   return Number.isFinite(n) ? n : null;
 };
 
 export async function processLeadIntake(input: IntakeInput): Promise<IntakeResult> {
   const v = input.values;
-  const email = text(v['email'])?.toLowerCase() ?? null;
-  const phone = text(v['phone']);
-  const fullName = text(v['name']) ?? text(v['full_name']);
+  const email = text(v["email"])?.toLowerCase() ?? null;
+  const phone = text(v["phone"]);
+  const fullName = text(v["name"]) ?? text(v["full_name"]);
 
   if (!email && !phone) throw new Error("An email address or phone number is required.");
 
@@ -122,13 +123,13 @@ export async function processLeadIntake(input: IntakeInput): Promise<IntakeResul
     full_name: fullName,
     email,
     phone,
-    company: text(v['company']),
-    job_title: text(v['job_title']),
-    country: text(v['country']),
-    interest: text(v['interest']),
-    budget: numeric(v['budget']),
-    message: text(v['message']),
-    preferred_contact: text(v['preferred_contact']),
+    company: text(v["company"]),
+    job_title: text(v["job_title"]),
+    country: text(v["country"]),
+    interest: text(v["interest"]),
+    budget: numeric(v["budget"]),
+    message: text(v["message"]),
+    preferred_contact: text(v["preferred_contact"]),
     source: input.source,
     utm_source: input.meta.utm_source ?? null,
     custom_fields: input.custom as never,
@@ -221,7 +222,10 @@ export async function processLeadIntake(input: IntakeInput): Promise<IntakeResul
         lead_id: leadId,
         type: "system.scored",
         title: `Scored ${scored.score} — ${scored.band}`,
-        body: scored.reasons.map((r) => `${r.label} (${r.points > 0 ? "+" : ""}${r.points})`).join(", ") || "No rules matched.",
+        body:
+          scored.reasons
+            .map((r) => `${r.label} (${r.points > 0 ? "+" : ""}${r.points})`)
+            .join(", ") || "No rules matched.",
         meta: { reasons: scored.reasons } as never,
       },
     ]);
@@ -233,7 +237,10 @@ export async function processLeadIntake(input: IntakeInput): Promise<IntakeResul
         .select("id, label, field, operator, value, assign_to, strategy, priority, is_active")
         .eq("workspace_id", input.workspaceId)
         .eq("is_active", true),
-      supabaseAdmin.from("memberships").select("user_id, role").eq("workspace_id", input.workspaceId),
+      supabaseAdmin
+        .from("memberships")
+        .select("user_id, role")
+        .eq("workspace_id", input.workspaceId),
       supabaseAdmin
         .from("leads")
         .select("id", { count: "exact", head: true })
@@ -273,7 +280,11 @@ export async function processLeadIntake(input: IntakeInput): Promise<IntakeResul
         title: `Follow up with ${fullName ?? email ?? "new lead"}`,
         description: `First response promised within ${slaLabel(sla)}.`,
         type: "follow_up" as never,
-        priority: (scored.band === "hot" ? "urgent" : scored.band === "qualified" ? "high" : "normal") as never,
+        priority: (scored.band === "hot"
+          ? "urgent"
+          : scored.band === "qualified"
+            ? "high"
+            : "normal") as never,
         due_at: dueAt,
         sla_minutes: sla,
       })

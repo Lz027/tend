@@ -1,8 +1,8 @@
-# Poppy Brand Guidelines
+# Tend Brand Guidelines
 
 ## Product name
 
-**Poppy**
+**Tend**
 
 Bright, short, friendly, easy to say and spell. It suggests something cheerful that "pops up"
 — which is exactly what a new enquiry does.
@@ -11,14 +11,14 @@ Tagline: **Leads that pop up, sorted.**
 
 ## Positioning
 
-Poppy is a lead workspace for small creative teams — freelancers, web and design agencies,
+Tend is a lead workspace for small creative teams — freelancers, web and design agencies,
 studios, and local service businesses — who need to manage project enquiries without the
 weight of a traditional CRM.
 
-Core promise: **Poppy turns scattered enquiries into clear next actions.**
+Core promise: **Tend turns scattered enquiries into clear next actions.**
 
-Poppy owns the lead record, qualification, routing, tasks, timeline and event history.
-Make, n8n and Zapier are optional connectors for data in and events out. Poppy is not an
+Tend owns the lead record, qualification, routing, tasks, timeline and event history.
+Make, n8n and Zapier are optional connectors for data in and events out. Tend is not an
 automation builder.
 
 ## Personality
@@ -60,7 +60,7 @@ All values live as semantic tokens in `src/styles.css` (oklch). Components must 
 
 ## Logo and iconography
 
-- Primary mark: a simple poppy bloom / spark inside a rounded square in berry violet.
+- Primary mark: a simple tend bloom / spark inside a rounded square in berry violet.
 - Use it in the sidebar, the auth panel, public forms and the favicon.
 - Icons stay simple and line-based; Lucide throughout.
 

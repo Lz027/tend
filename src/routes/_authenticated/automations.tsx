@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { ArrowDownToLine, ArrowUpFromLine, Copy, Send } from "lucide-react";
 import { toast } from "sonner";
-import { AppShell, useWorkspace } from "@/components/beconlane/app-shell";
+import { AppShell, useWorkspace } from "@/components/app/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,10 +15,17 @@ import { sendTestEvent } from "@/lib/automations.functions";
 export const Route = createFileRoute("/_authenticated/automations")({
   head: () => ({
     meta: [
-      { title: "Automations | Poppy" },
-      { name: "description", content: "Send leads into Poppy from anywhere, and push Poppy events out to Make, n8n or Zapier." },
-      { property: "og:title", content: "Automations | Poppy" },
-      { property: "og:description", content: "Inbound links and signed outbound events for your lead workspace." },
+      { title: "Automations | Tend" },
+      {
+        name: "description",
+        content:
+          "Send leads into Tend from anywhere, and push Tend events out to Make, n8n or Zapier.",
+      },
+      { property: "og:title", content: "Automations | Tend" },
+      {
+        property: "og:description",
+        content: "Inbound links and signed outbound events for your lead workspace.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -26,12 +33,20 @@ export const Route = createFileRoute("/_authenticated/automations")({
   component: AutomationsPage,
 });
 
-const EVENTS = ["lead.created", "lead.updated", "lead.status_changed", "task.created", "task.completed"];
+const EVENTS = [
+  "lead.created",
+  "lead.updated",
+  "lead.status_changed",
+  "task.created",
+  "task.completed",
+];
 
 function randomToken(length = 32) {
   const bytes = new Uint8Array(length);
   crypto.getRandomValues(bytes);
-  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 function AutomationsPage() {
@@ -50,9 +65,22 @@ function AutomationsPage() {
     enabled: Boolean(workspaceId),
     queryFn: async () => {
       const [sources, endpoints, deliveries] = await Promise.all([
-        supabase.from("automation_sources").select("*").eq("workspace_id", workspaceId!).order("created_at", { ascending: false }),
-        supabase.from("automation_endpoints").select("*").eq("workspace_id", workspaceId!).order("created_at", { ascending: false }),
-        supabase.from("automation_deliveries").select("id, event_type, status, response_status, created_at").eq("workspace_id", workspaceId!).order("created_at", { ascending: false }).limit(15),
+        supabase
+          .from("automation_sources")
+          .select("*")
+          .eq("workspace_id", workspaceId!)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("automation_endpoints")
+          .select("*")
+          .eq("workspace_id", workspaceId!)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("automation_deliveries")
+          .select("id, event_type, status, response_status, created_at")
+          .eq("workspace_id", workspaceId!)
+          .order("created_at", { ascending: false })
+          .limit(15),
       ]);
       if (sources.error) throw sources.error;
       if (endpoints.error) throw endpoints.error;
@@ -85,7 +113,8 @@ function AutomationsPage() {
 
   const createEndpoint = useMutation({
     mutationFn: async () => {
-      if (!endpoint.url.startsWith("https://")) throw new Error("The address must start with https://");
+      if (!endpoint.url.startsWith("https://"))
+        throw new Error("The address must start with https://");
       const { error } = await supabase.from("automation_endpoints").insert({
         workspace_id: workspaceId!,
         created_by: userId ?? null,
@@ -107,7 +136,15 @@ function AutomationsPage() {
   });
 
   const toggleRow = useMutation({
-    mutationFn: async ({ table, id, active }: { table: "automation_sources" | "automation_endpoints"; id: string; active: boolean }) => {
+    mutationFn: async ({
+      table,
+      id,
+      active,
+    }: {
+      table: "automation_sources" | "automation_endpoints";
+      id: string;
+      active: boolean;
+    }) => {
       const { error } = await supabase.from(table).update({ is_active: active }).eq("id", id);
       if (error) throw error;
     },
@@ -132,7 +169,10 @@ function AutomationsPage() {
 
   const toggleEvent = async (id: string, current: string[], event: string) => {
     const next = current.includes(event) ? current.filter((e) => e !== event) : [...current, event];
-    const { error } = await supabase.from("automation_endpoints").update({ subscribed_events: next }).eq("id", id);
+    const { error } = await supabase
+      .from("automation_endpoints")
+      .update({ subscribed_events: next })
+      .eq("id", id);
     if (error) toast.error(error.message);
     else invalidate();
   };
@@ -140,17 +180,33 @@ function AutomationsPage() {
   return (
     <AppShell title="Automations">
       <p className="mb-6 max-w-2xl text-muted-foreground">
-        Poppy keeps the lead record, the scoring and the follow-ups. Your other tools just send leads in and listen for what happens next.
+        Tend keeps the lead record, the scoring and the follow-ups. Your other tools just send leads
+        in and listen for what happens next.
       </p>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="rounded-2xl border p-5">
-          <h2 className="flex items-center gap-2 font-display text-2xl"><ArrowDownToLine className="size-5 text-primary" /> Leads coming in</h2>
-          <p className="mb-4 text-sm text-muted-foreground">Create a link, then POST JSON to it from Make, n8n, Zapier or your own script.</p>
+          <h2 className="flex items-center gap-2 font-display text-2xl">
+            <ArrowDownToLine className="size-5 text-primary" /> Leads coming in
+          </h2>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Create a link, then POST JSON to it from Make, n8n, Zapier or your own script.
+          </p>
 
           <div className="flex gap-2">
-            <Input value={sourceName} onChange={(e) => setSourceName(e.target.value)} placeholder="Name this source" aria-label="Source name" />
-            <Button className="pop-press" onClick={() => createSource.mutate()} disabled={createSource.isPending}>Create link</Button>
+            <Input
+              value={sourceName}
+              onChange={(e) => setSourceName(e.target.value)}
+              placeholder="Name this source"
+              aria-label="Source name"
+            />
+            <Button
+              className="pop-press"
+              onClick={() => createSource.mutate()}
+              disabled={createSource.isPending}
+            >
+              Create link
+            </Button>
           </div>
 
           <ul className="mt-4 space-y-3">
@@ -158,38 +214,71 @@ function AutomationsPage() {
               <li key={source.id} className="rounded-xl border p-3">
                 <div className="flex items-center gap-3">
                   <p className="min-w-0 flex-1 truncate font-medium">{source.name}</p>
-                  <Switch checked={source.is_active} aria-label={`Toggle ${source.name}`} onCheckedChange={(active) => toggleRow.mutate({ table: "automation_sources", id: source.id, active })} />
+                  <Switch
+                    checked={source.is_active}
+                    aria-label={`Toggle ${source.name}`}
+                    onCheckedChange={(active) =>
+                      toggleRow.mutate({ table: "automation_sources", id: source.id, active })
+                    }
+                  />
                 </div>
                 <div className="mt-2 flex items-center gap-2">
                   <code className="min-w-0 flex-1 truncate rounded bg-muted px-2 py-1 text-xs">{`${origin}/api/public/intake/${source.token}`}</code>
-                  <Button size="icon" variant="ghost" aria-label="Copy link" onClick={() => copy(`${origin}/api/public/intake/${source.token}`)}><Copy className="size-4" /></Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    aria-label="Copy link"
+                    onClick={() => copy(`${origin}/api/public/intake/${source.token}`)}
+                  >
+                    <Copy className="size-4" />
+                  </Button>
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  {source.received_count} received{source.error_count ? ` · ${source.error_count} rejected` : ""}
+                  {source.received_count} received
+                  {source.error_count ? ` · ${source.error_count} rejected` : ""}
                   {source.last_error ? ` · last problem: ${source.last_error}` : ""}
                 </p>
               </li>
             ))}
             {(data.data?.sources ?? []).length === 0 && !data.isLoading ? (
               <li className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
-                No incoming links yet. Send fields like name, email, phone, company, budget and message.
+                No incoming links yet. Send fields like name, email, phone, company, budget and
+                message.
               </li>
             ) : null}
           </ul>
         </section>
 
         <section className="rounded-2xl border p-5">
-          <h2 className="flex items-center gap-2 font-display text-2xl"><ArrowUpFromLine className="size-5 text-primary" /> Events going out</h2>
-          <p className="mb-4 text-sm text-muted-foreground">Poppy posts signed JSON to your automation whenever something happens.</p>
+          <h2 className="flex items-center gap-2 font-display text-2xl">
+            <ArrowUpFromLine className="size-5 text-primary" /> Events going out
+          </h2>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Tend posts signed JSON to your automation whenever something happens.
+          </p>
 
           <div className="grid gap-2 sm:grid-cols-2">
             <div>
-              <Label htmlFor="endpoint-name" className="text-xs">Name</Label>
-              <Input id="endpoint-name" value={endpoint.name} onChange={(e) => setEndpoint({ ...endpoint, name: e.target.value })} placeholder="Slack alert" />
+              <Label htmlFor="endpoint-name" className="text-xs">
+                Name
+              </Label>
+              <Input
+                id="endpoint-name"
+                value={endpoint.name}
+                onChange={(e) => setEndpoint({ ...endpoint, name: e.target.value })}
+                placeholder="Slack alert"
+              />
             </div>
             <div>
-              <Label htmlFor="endpoint-provider" className="text-xs">Tool</Label>
-              <select id="endpoint-provider" className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={endpoint.provider} onChange={(e) => setEndpoint({ ...endpoint, provider: e.target.value })}>
+              <Label htmlFor="endpoint-provider" className="text-xs">
+                Tool
+              </Label>
+              <select
+                id="endpoint-provider"
+                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                value={endpoint.provider}
+                onChange={(e) => setEndpoint({ ...endpoint, provider: e.target.value })}
+              >
                 <option value="make">Make</option>
                 <option value="n8n">n8n</option>
                 <option value="zapier">Zapier</option>
@@ -197,11 +286,24 @@ function AutomationsPage() {
               </select>
             </div>
             <div className="sm:col-span-2">
-              <Label htmlFor="endpoint-url" className="text-xs">Address</Label>
-              <Input id="endpoint-url" value={endpoint.url} onChange={(e) => setEndpoint({ ...endpoint, url: e.target.value })} placeholder="https://hook.eu2.make.com/..." />
+              <Label htmlFor="endpoint-url" className="text-xs">
+                Address
+              </Label>
+              <Input
+                id="endpoint-url"
+                value={endpoint.url}
+                onChange={(e) => setEndpoint({ ...endpoint, url: e.target.value })}
+                placeholder="https://hook.eu2.make.com/..."
+              />
             </div>
           </div>
-          <Button className="pop-press mt-3" onClick={() => createEndpoint.mutate()} disabled={createEndpoint.isPending}>Save connection</Button>
+          <Button
+            className="pop-press mt-3"
+            onClick={() => createEndpoint.mutate()}
+            disabled={createEndpoint.isPending}
+          >
+            Save connection
+          </Button>
 
           <ul className="mt-4 space-y-3">
             {(data.data?.endpoints ?? []).map((item) => (
@@ -211,10 +313,22 @@ function AutomationsPage() {
                     <p className="truncate font-medium">{item.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{item.url}</p>
                   </div>
-                  <Button size="sm" variant="outline" className="pop-press" onClick={() => test.mutate(item.id)} disabled={test.isPending}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="pop-press"
+                    onClick={() => test.mutate(item.id)}
+                    disabled={test.isPending}
+                  >
                     <Send className="size-4" /> Test
                   </Button>
-                  <Switch checked={item.is_active} aria-label={`Toggle ${item.name}`} onCheckedChange={(active) => toggleRow.mutate({ table: "automation_endpoints", id: item.id, active })} />
+                  <Switch
+                    checked={item.is_active}
+                    aria-label={`Toggle ${item.name}`}
+                    onCheckedChange={(active) =>
+                      toggleRow.mutate({ table: "automation_endpoints", id: item.id, active })
+                    }
+                  />
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {EVENTS.map((event) => {
@@ -233,7 +347,14 @@ function AutomationsPage() {
                 </div>
                 <div className="mt-2 flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">Signing secret</span>
-                  <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => copy(item.secret)}>Copy</Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-7 px-2 text-xs"
+                    onClick={() => copy(item.secret)}
+                  >
+                    Copy
+                  </Button>
                 </div>
               </li>
             ))}
@@ -255,9 +376,14 @@ function AutomationsPage() {
             {(data.data?.deliveries ?? []).map((delivery) => (
               <li key={delivery.id} className="flex items-center gap-3 py-2">
                 <span className="font-medium">{delivery.event_type}</span>
-                <span className={delivery.status === "delivered" ? "text-primary" : "text-destructive"}>{delivery.status}</span>
+                <span
+                  className={delivery.status === "delivered" ? "text-primary" : "text-destructive"}
+                >
+                  {delivery.status}
+                </span>
                 <span className="ml-auto text-xs text-muted-foreground">
-                  {delivery.response_status ?? "—"} · {new Date(delivery.created_at).toLocaleString()}
+                  {delivery.response_status ?? "—"} ·{" "}
+                  {new Date(delivery.created_at).toLocaleString()}
                 </span>
               </li>
             ))}
