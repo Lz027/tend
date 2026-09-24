@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Copy, FileText, Plus } from "lucide-react";
-import { AppShell, useWorkspace } from "@/components/beconlane/app-shell";
+import { AppShell, useWorkspace } from "@/components/app/app-shell";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/forms/")({
   head: () => ({
     meta: [
-      { title: "Forms | Poppy" },
+      { title: "Forms | Tend" },
       { name: "description", content: "Create and manage lead capture forms." },
-      { property: "og:title", content: "Forms | Poppy" },
+      { property: "og:title", content: "Forms | Tend" },
       { property: "og:description", content: "Create and manage lead capture forms." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

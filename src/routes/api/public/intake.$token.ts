@@ -35,7 +35,9 @@ export const Route = createFileRoute("/api/public/intake/$token")({
 
         const { data: source } = await supabaseAdmin
           .from("automation_sources")
-          .select("id, workspace_id, is_active, field_mapping, provider, name, received_count, error_count")
+          .select(
+            "id, workspace_id, is_active, field_mapping, provider, name, received_count, error_count",
+          )
           .eq("token", params.token)
           .maybeSingle();
 
@@ -47,7 +49,21 @@ export const Route = createFileRoute("/api/public/intake/$token")({
 
         for (const [key, value] of Object.entries(body)) {
           const target = mapping[key] ?? key;
-          if (["name", "full_name", "email", "phone", "company", "job_title", "country", "interest", "budget", "message", "preferred_contact"].includes(target)) {
+          if (
+            [
+              "name",
+              "full_name",
+              "email",
+              "phone",
+              "company",
+              "job_title",
+              "country",
+              "interest",
+              "budget",
+              "message",
+              "preferred_contact",
+            ].includes(target)
+          ) {
             values[target] = value;
           } else {
             custom[target] = value;
@@ -75,12 +91,22 @@ export const Route = createFileRoute("/api/public/intake/$token")({
             })
             .eq("id", source.id);
 
-          return json({ ok: true, lead_id: result.leadId, duplicate: result.duplicate, score: result.score, band: result.band });
+          return json({
+            ok: true,
+            lead_id: result.leadId,
+            duplicate: result.duplicate,
+            score: result.score,
+            band: result.band,
+          });
         } catch (error) {
           const message = error instanceof Error ? error.message : "Could not accept this lead.";
           await supabaseAdmin
             .from("automation_sources")
-            .update({ error_count: (source.error_count ?? 0) + 1, last_error: message, sample_payload: body as never })
+            .update({
+              error_count: (source.error_count ?? 0) + 1,
+              last_error: message,
+              sample_payload: body as never,
+            })
             .eq("id", source.id);
           return json({ error: message }, 400);
         }

@@ -23,7 +23,7 @@ export const sendTestEvent = createServerFn({ method: "POST" })
         id: "00000000-0000-0000-0000-000000000000",
         full_name: "Test Lead",
         email: "test@example.com",
-        company: "Poppy Test",
+        company: "Tend Test",
         score: 82,
         score_band: "hot",
         status: "new",
@@ -53,8 +53,8 @@ export const sendTestEvent = createServerFn({ method: "POST" })
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-poppy-event": "lead.created",
-          "x-poppy-signature": `sha256=${signature}`,
+          "x-tend-event": "lead.created",
+          "x-tend-signature": `sha256=${signature}`,
         },
         body,
       });

@@ -12,7 +12,6 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -40,7 +39,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    console.error(error);
   }, [error]);
 
   return (
@@ -79,11 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Poppy — leads that pop up, sorted" },
+      { title: "Tend — leads that pop up, sorted" },
       { name: "description", content: "A friendly lead workspace for small creative teams." },
-      { name: "author", content: "Poppy" },
-      { property: "og:title", content: "Poppy — leads that pop up, sorted" },
-      { property: "og:description", content: "A friendly lead workspace for small creative teams." },
+      { name: "author", content: "Tend" },
+      { property: "og:title", content: "Tend — leads that pop up, sorted" },
+      {
+        property: "og:description",
+        content: "A friendly lead workspace for small creative teams.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

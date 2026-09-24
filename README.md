@@ -1,14 +1,14 @@
-# poppy
+# tend
 
-Core PRD: Beconlane Lead Generation App
+Core PRD: Tend Lead Generation App
 
 1. Product definition
 
-Product name: Beconlane
+Product name: Tend
 Product type: Lead-generation and lead-management platform
 Primary goal: Help businesses capture, qualify, route, follow up with, and convert leads from multiple sources in one simple workspace.
 
-Beconlane should not initially try to become a full enterprise CRM. Its first version should solve one focused problem:
+Tend should not initially try to become a full enterprise CRM. Its first version should solve one focused problem:
 
 A lead arrives, the business understands its value, assigns it to the right person, follows up quickly, and knows what happened.
 
@@ -32,7 +32,7 @@ Teams cannot easily see which sources generate revenue.
 
 Consent and contact permissions are poorly documented.
 
-Beconlane will centralize lead intake and turn every submission into an actionable sales record.
+Tend will centralize lead intake and turn every submission into an actionable sales record.
 
 3. Target customers
 
@@ -126,9 +126,9 @@ Lead journey
 
 Prospect submits a form.
 
-Beconlane validates the submission.
+Tend validates the submission.
 
-Beconlane records source and attribution data.
+Tend records source and attribution data.
 
 System checks for duplicates.
 
@@ -412,7 +412,7 @@ Notes.
 
 Tasks.
 
-Emails or notifications sent by Beconlane.
+Emails or notifications sent by Tend.
 
 Imports and exports.
 
@@ -1374,7 +1374,7 @@ GET    /api/analytics/export
 
 10. Privacy and security requirements
 
-Beconlane will process personal information, so privacy cannot be postponed until after launch.
+Tend will process personal information, so privacy cannot be postponed until after launch.
 
 MVP requirements
 
@@ -1410,7 +1410,7 @@ Global lead systems should record the legal basis and consent details for each c
 
 Important product rule
 
-Beconlane should not support scraping or selling personal data by default. The MVP should focus on first-party, permission-based lead capture from forms, imports with documented lawful origin, and approved integrations.
+Tend should not support scraping or selling personal data by default. The MVP should focus on first-party, permission-based lead capture from forms, imports with documented lawful origin, and approved integrations.
 
 11. Integrations
 
@@ -1749,25 +1749,15 @@ Change lead status.
 
 View the complete activity timeline.
 
-Do not start with analytics, AI, payments, or ten integrations. If this vertical slice works end-to-end, Beconlane already has a usable core product.
+Do not start with analytics, AI, payments, or ten integrations. If this vertical slice works end-to-end, Tend already has a usable core product.
 
 Definition of MVP
 
-Beconlane MVP is ready when a real business can:
+Tend MVP is ready when a real business can:
 
 Create a form, receive a lead, see it in the dashboard, automatically assign it, follow up, change its status, and measure the result.
 
 That is the core PRD and the correct starting scope for the lead-generation app.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/9213e9e6-43b9-4e00-9a73-e2af3c68427a).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 

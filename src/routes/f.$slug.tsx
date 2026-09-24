@@ -12,10 +12,16 @@ export const Route = createFileRoute("/f/$slug")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Start your project enquiry | Poppy" },
-      { name: "description", content: "Tell us about your project and we will reply with clear next steps." },
+      { title: "Start your project enquiry | Tend" },
+      {
+        name: "description",
+        content: "Tell us about your project and we will reply with clear next steps.",
+      },
       { property: "og:title", content: "Start your project enquiry" },
-      { property: "og:description", content: "Tell us about your project and we will reply with clear next steps." },
+      {
+        property: "og:description",
+        content: "Tell us about your project and we will reply with clear next steps.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -67,7 +73,9 @@ function PublicFormPage() {
     void (async () => {
       const { data } = await supabase
         .from("forms")
-        .select("id, name, description, fields, submit_text, success_message, consent_required, consent_text, is_active")
+        .select(
+          "id, name, description, fields, submit_text, success_message, consent_required, consent_text, is_active",
+        )
         .eq("slug", slug)
         .eq("is_active", true)
         .maybeSingle();
@@ -81,7 +89,7 @@ function PublicFormPage() {
     };
   }, [slug]);
 
-  const fields = ((form?.['fields'] as FormField[] | undefined) ?? [])
+  const fields = ((form?.["fields"] as FormField[] | undefined) ?? [])
     .slice()
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
@@ -110,7 +118,12 @@ function PublicFormPage() {
           idempotency_key: idempotencyKey,
         }),
       });
-      const result = (await response.json()) as { ok?: boolean; error?: string; message?: string; redirect_url?: string | null };
+      const result = (await response.json()) as {
+        ok?: boolean;
+        error?: string;
+        message?: string;
+        redirect_url?: string | null;
+      };
       if (!response.ok || result.error) {
         setError(result.error ?? "Something went wrong. Please try again.");
       } else if (result.redirect_url) {
@@ -138,7 +151,9 @@ function PublicFormPage() {
       <main className="flex min-h-screen items-center justify-center bg-muted/40 p-6 text-center">
         <div>
           <h1 className="font-display text-3xl">This form has closed</h1>
-          <p className="mt-2 text-muted-foreground">The link may have changed. Please get in touch directly.</p>
+          <p className="mt-2 text-muted-foreground">
+            The link may have changed. Please get in touch directly.
+          </p>
         </div>
       </main>
     );
@@ -151,7 +166,7 @@ function PublicFormPage() {
           <span className="flex size-8 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Flower2 className="size-4" />
           </span>
-          <span className="font-display text-xl">{String(form['name'])}</span>
+          <span className="font-display text-xl">{String(form["name"])}</span>
         </div>
 
         {done ? (
@@ -161,7 +176,9 @@ function PublicFormPage() {
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-5">
-            {form['description'] ? <p className="text-muted-foreground">{String(form['description'])}</p> : null}
+            {form["description"] ? (
+              <p className="text-muted-foreground">{String(form["description"])}</p>
+            ) : null}
 
             {fields.map((field) => (
               <div key={field.id} className="space-y-2">
@@ -206,7 +223,9 @@ function PublicFormPage() {
                 ) : (
                   <Input
                     id={field.id}
-                    type={field.type === "email" ? "email" : field.type === "phone" ? "tel" : "text"}
+                    type={
+                      field.type === "email" ? "email" : field.type === "phone" ? "tel" : "text"
+                    }
                     required={field.required}
                     value={values[field.id] ?? ""}
                     onChange={(e) => setValues((prev) => ({ ...prev, [field.id]: e.target.value }))}
@@ -226,19 +245,23 @@ function PublicFormPage() {
               />
             </div>
 
-            {form['consent_required'] ? (
+            {form["consent_required"] ? (
               <label className="flex items-start gap-3 rounded-2xl bg-muted/60 p-4 text-sm">
                 <Checkbox checked={consent} onCheckedChange={(c) => setConsent(Boolean(c))} />
-                <span>{String(form['consent_text'])}</span>
+                <span>{String(form["consent_text"])}</span>
               </label>
             ) : null}
 
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
             <Button type="submit" className="pop-press w-full" disabled={submitting}>
-              {submitting ? <Loader2 className="size-4 animate-spin" /> : String(form['submit_text'] ?? "Submit")}
+              {submitting ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                String(form["submit_text"] ?? "Submit")
+              )}
             </Button>
-            <p className="text-center text-xs text-muted-foreground">Powered by Poppy</p>
+            <p className="text-center text-xs text-muted-foreground">Powered by Tend</p>
           </form>
         )}
       </div>

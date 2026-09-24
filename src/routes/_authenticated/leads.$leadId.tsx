@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Bot, CheckCircle2, Mail, User } from "lucide-react";
-import { AppShell, useWorkspace } from "@/components/beconlane/app-shell";
+import { AppShell, useWorkspace } from "@/components/app/app-shell";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { nextActionFor, type ScoreBand } from "@/lib/lead-scoring";
@@ -9,10 +9,16 @@ import { nextActionFor, type ScoreBand } from "@/lib/lead-scoring";
 export const Route = createFileRoute("/_authenticated/leads/$leadId")({
   head: () => ({
     meta: [
-      { title: "Lead detail | Poppy" },
-      { name: "description", content: "Score reasons, recommended next action and the full lead timeline." },
-      { property: "og:title", content: "Lead detail | Poppy" },
-      { property: "og:description", content: "Score reasons, next action and the full lead timeline." },
+      { title: "Lead detail | Tend" },
+      {
+        name: "description",
+        content: "Score reasons, recommended next action and the full lead timeline.",
+      },
+      { property: "og:title", content: "Lead detail | Tend" },
+      {
+        property: "og:description",
+        content: "Score reasons, next action and the full lead timeline.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -114,7 +120,9 @@ function LeadDetailPage() {
   }
 
   const row = lead.data;
-  const openTask = (tasks.data ?? []).find((t) => t.status === "open" || t.status === "in_progress");
+  const openTask = (tasks.data ?? []).find(
+    (t) => t.status === "open" || t.status === "in_progress",
+  );
   const overdue = Boolean(openTask?.due_at && new Date(openTask.due_at) < new Date());
   const recommendation = nextActionFor({
     band: row.score_band as ScoreBand,
@@ -135,7 +143,9 @@ function LeadDetailPage() {
       <div
         className={`mb-6 rounded-3xl border p-6 ${recommendation.urgency === "high" ? "border-destructive/40 bg-destructive/5" : "bg-accent/10"}`}
       >
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Recommended next action</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Recommended next action
+        </p>
         <h2 className="mt-2 font-display text-2xl">{recommendation.action}</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {row.email ? (
@@ -146,12 +156,22 @@ function LeadDetailPage() {
             </Button>
           ) : null}
           {row.owner_id !== workspace.data?.user.id ? (
-            <Button size="sm" variant="outline" className="pop-press" onClick={() => claim.mutate()}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="pop-press"
+              onClick={() => claim.mutate()}
+            >
               <User className="size-4" /> Assign to me
             </Button>
           ) : null}
           {row.status === "new" ? (
-            <Button size="sm" variant="outline" className="pop-press" onClick={() => setStatus.mutate("contacted")}>
+            <Button
+              size="sm"
+              variant="outline"
+              className="pop-press"
+              onClick={() => setStatus.mutate("contacted")}
+            >
               <CheckCircle2 className="size-4" /> Mark contacted
             </Button>
           ) : null}
@@ -180,7 +200,9 @@ function LeadDetailPage() {
               ))}
             </dl>
             {row.message ? (
-              <p className="mt-4 whitespace-pre-wrap rounded-xl bg-muted/60 p-4 text-sm">{row.message}</p>
+              <p className="mt-4 whitespace-pre-wrap rounded-xl bg-muted/60 p-4 text-sm">
+                {row.message}
+              </p>
             ) : null}
           </section>
 
@@ -198,9 +220,11 @@ function LeadDetailPage() {
                     </span>
                     <div>
                       <p className="text-sm font-medium">{entry.title}</p>
-                      {entry.body ? <p className="text-sm text-muted-foreground">{entry.body}</p> : null}
+                      {entry.body ? (
+                        <p className="text-sm text-muted-foreground">{entry.body}</p>
+                      ) : null}
                       <p className="text-xs text-muted-foreground">
-                        {system ? "Poppy" : "Team"} · {new Date(entry.created_at).toLocaleString()}
+                        {system ? "Tend" : "Team"} · {new Date(entry.created_at).toLocaleString()}
                       </p>
                     </div>
                   </li>
@@ -216,17 +240,23 @@ function LeadDetailPage() {
         <div className="space-y-6">
           <section className="rounded-2xl border p-5">
             <h3 className="font-display text-xl">Qualification score</h3>
-            <p className={`mt-3 inline-flex rounded-full px-4 py-1.5 text-sm font-semibold capitalize score-${row.score_band}`}>
+            <p
+              className={`mt-3 inline-flex rounded-full px-4 py-1.5 text-sm font-semibold capitalize score-${row.score_band}`}
+            >
               {row.score} · {row.score_band}
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               {reasons.map((reason, index) => (
                 <li key={index} className="flex justify-between gap-3">
                   <span className="text-muted-foreground">{reason.label}</span>
-                  <span className="font-medium">{reason.points > 0 ? `+${reason.points}` : reason.points}</span>
+                  <span className="font-medium">
+                    {reason.points > 0 ? `+${reason.points}` : reason.points}
+                  </span>
                 </li>
               ))}
-              {reasons.length === 0 ? <li className="text-muted-foreground">No scoring rules matched.</li> : null}
+              {reasons.length === 0 ? (
+                <li className="text-muted-foreground">No scoring rules matched.</li>
+              ) : null}
             </ul>
           </section>
 
@@ -254,11 +284,14 @@ function LeadDetailPage() {
                 <li key={task.id}>
                   <p className="font-medium">{task.title}</p>
                   <p className="text-xs text-muted-foreground">
-                    {task.due_at ? `Due ${new Date(task.due_at).toLocaleString()}` : "No due date"} · {task.status}
+                    {task.due_at ? `Due ${new Date(task.due_at).toLocaleString()}` : "No due date"}{" "}
+                    · {task.status}
                   </p>
                 </li>
               ))}
-              {(tasks.data ?? []).length === 0 ? <li className="text-muted-foreground">No follow-ups yet.</li> : null}
+              {(tasks.data ?? []).length === 0 ? (
+                <li className="text-muted-foreground">No follow-ups yet.</li>
+              ) : null}
             </ul>
           </section>
         </div>

@@ -1,4 +1,4 @@
-# Poppy build roadmap
+# Tend build roadmap
 
 ## Phase 0 — Foundation (done)
 - [x] Database foundation and workspace access rules
@@ -6,7 +6,7 @@
 - [x] Protected workspace shell, dashboard, forms list, form builder
 
 ## Phase 1 — Brand and shell
-- [ ] Poppy palette, typography, tokens
+- [ ] Tend palette, typography, tokens
 - [ ] Rewritten brand guidelines
 - [ ] Refreshed shell, auth screen, dashboard copy
 
